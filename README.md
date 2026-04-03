@@ -6,7 +6,7 @@
 | Khairat Joulak | 230513449 | khairat1 |
 | Mahmoud Dib | YOUR_ID | YOUR_GITHUB |
 | Abdulrahman Birecikli | YOUR_ID | YOUR_GITHUB |
-| Maymouna Salameh | YOUR_ID | YOUR_GITHUB |
+| Maymouna Salameh | 230513607 | m4xn |
 | Bisan Ibrahim | 220513038 | YOUR_GITHUB |
 
 ## Project Introduction

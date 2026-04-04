@@ -8,6 +8,31 @@
 
 ## 1. Scope
 
+This document describes the software architecture of the **Online Medical Clinic
+Reservation System**, a web-based platform developed as part of the SWE332 Software
+Architecture course at Altınbaş University.
+
+The architecture is documented using the **4+1 Architectural View Model**, covering
+the logical, process, development, physical, and scenario views of the system.
+
+### What This Document Covers
+
+- The web application architecture (Django backend, HTML/CSS/JS frontend)
+- User authentication and role-based access control (Patient, Doctor, Admin)
+- Appointment booking system including double-booking prevention
+- Doctor and schedule management (Admin functions)
+- AI chatbot assistant for symptom-based department recommendation
+- PostgreSQL database structure and data flow
+- Deployment configuration for local demonstration
+
+### What This Document Does Not Cover
+
+- Payment processing (not part of the system)
+- Mobile application development
+- Online/cloud deployment (system is demonstrated locally)
+- Email notification integration (optional future feature)
+- Multilingual support (optional future feature)
+- Data analytics or administrative reporting tools
 ## 2. References
 
 ## 3. Software Architecture
@@ -218,6 +243,154 @@ access the system — maximizing accessibility with zero client-side
 deployment effort.
 
 ## 9. Scenarios
+
+The Scenarios view represents the **+1** in the 4+1 Architectural View Model.
+It describes the most significant use cases of the system and demonstrates how
+the architecture supports them. Each scenario involves one or more actors
+interacting with the system, and illustrates how the logical, process,
+development, and physical views work together in practice.
+
+---
+
+### 9.1 Use Case Diagram
+
+The following diagram shows the main actors and their interactions with the
+Online Medical Clinic Reservation System.
+```mermaid
+graph TD
+    Patient((Patient))
+    Doctor((Doctor))
+    Admin((Admin))
+    Chatbot((AI Chatbot))
+
+    Patient --> UC1[Register / Login]
+    Patient --> UC2[Browse Clinic Information]
+    Patient --> UC3[Book an Appointment]
+    Patient --> UC4[View / Cancel Appointment]
+    Patient --> UC5[Interact with AI Chatbot]
+
+    Doctor --> UC6[View Daily Schedule]
+
+    Admin --> UC7[Manage Doctors]
+    Admin --> UC8[Manage Departments]
+    Admin --> UC9[Manage Appointments]
+
+    UC5 --> Chatbot
+    Chatbot --> UC10[Recommend Department or Specialist]
+    UC10 --> UC3
+```
+
+---
+
+### 9.2 Scenario 1: Patient Books an Appointment
+
+**Actor:** Patient
+**Goal:** Book an appointment with a doctor by selecting department, date, and time.
+**Precondition:** Patient is registered and logged in.
+```mermaid
+sequenceDiagram
+    actor Patient
+    participant Browser
+    participant DjangoBackend
+    participant Database
+
+    Patient->>Browser: Navigate to Book Appointment page
+    Browser->>DjangoBackend: GET /appointments/book
+    DjangoBackend->>Database: Fetch available departments
+    Database-->>DjangoBackend: Return departments list
+    DjangoBackend-->>Browser: Render booking form
+    Patient->>Browser: Select department, doctor, date, time
+    Browser->>DjangoBackend: POST /appointments/book
+    DjangoBackend->>Database: Check for double-booking
+    Database-->>DjangoBackend: Slot is available
+    DjangoBackend->>Database: Save appointment
+    Database-->>DjangoBackend: Appointment saved
+    DjangoBackend-->>Browser: Show confirmation message
+    Browser-->>Patient: Appointment confirmed ✅
+```
+
+---
+
+### 9.3 Scenario 2: Patient Uses AI Chatbot
+
+**Actor:** Patient
+**Goal:** Get a department or specialist recommendation based on symptoms.
+**Precondition:** Patient is on the chatbot page.
+```mermaid
+sequenceDiagram
+    actor Patient
+    participant Browser
+    participant DjangoBackend
+    participant AIModule
+
+    Patient->>Browser: Open chatbot and describe symptoms
+    Browser->>DjangoBackend: POST /chatbot/query
+    DjangoBackend->>AIModule: Send symptom text
+    AIModule-->>DjangoBackend: Return recommended department
+    DjangoBackend-->>Browser: Display recommendation
+    Browser-->>Patient: "We recommend the Cardiology department"
+    Patient->>Browser: Click "Book Appointment"
+    Browser->>DjangoBackend: Redirect to booking page with department pre-selected
+```
+
+---
+
+### 9.4 Scenario 3: Patient Browses Clinic Information
+
+**Actor:** Patient (unauthenticated)
+**Goal:** Learn about the clinic, departments, and doctors before registering.
+**Precondition:** None — public pages are accessible without login.
+```mermaid
+sequenceDiagram
+    actor Visitor
+    participant Browser
+    participant DjangoBackend
+    participant Database
+
+    Visitor->>Browser: Navigate to clinic website
+    Browser->>DjangoBackend: GET /home
+    DjangoBackend-->>Browser: Render Home page
+    Visitor->>Browser: Click on Departments
+    Browser->>DjangoBackend: GET /departments
+    DjangoBackend->>Database: Fetch departments list
+    Database-->>DjangoBackend: Return departments
+    DjangoBackend-->>Browser: Render Departments page
+    Visitor->>Browser: Click on Doctors
+    Browser->>DjangoBackend: GET /doctors
+    DjangoBackend->>Database: Fetch doctors list
+    Database-->>DjangoBackend: Return doctors
+    DjangoBackend-->>Browser: Render Doctors page
+```
+
+---
+
+### 9.5 Scenario 4: Admin Manages Doctors and Departments
+
+**Actor:** Admin
+**Goal:** Add a new doctor and assign them to a department.
+**Precondition:** Admin is logged in with admin privileges.
+```mermaid
+sequenceDiagram
+    actor Admin
+    participant Browser
+    participant DjangoBackend
+    participant Database
+
+    Admin->>Browser: Navigate to Admin Dashboard
+    Browser->>DjangoBackend: GET /admin/dashboard
+    DjangoBackend-->>Browser: Render Admin Dashboard
+    Admin->>Browser: Click "Add Doctor"
+    Browser->>DjangoBackend: GET /admin/doctors/add
+    DjangoBackend->>Database: Fetch departments list
+    Database-->>DjangoBackend: Return departments
+    DjangoBackend-->>Browser: Render Add Doctor form
+    Admin->>Browser: Fill in doctor details and assign department
+    Browser->>DjangoBackend: POST /admin/doctors/add
+    DjangoBackend->>Database: Save new doctor
+    Database-->>DjangoBackend: Doctor saved
+    DjangoBackend-->>Browser: Show success message
+    Browser-->>Admin: Doctor added successfully 
+    ...
 
 ## 10. Size and Performance
 

@@ -4,6 +4,18 @@
 
 ## Table of Contents
 
+1. [Scope](#1-scope)
+2. [References](#2-references)
+3. [Software Architecture](#3-software-architecture)
+4. [Architectural Goals & Constraints](#4-architectural-goals--constraints)
+5. [Logical Architecture](#5-logical-architecture)
+6. [Process Architecture](#6-process-architecture)
+7. [Development Architecture](#7-development-architecture)
+8. [Physical Architecture](#8-physical-architecture)
+9. [Scenarios](#9-scenarios)
+10. [Size and Performance](#10-size-and-performance)
+11. [Quality](#11-quality)
+
 ## List of Figures
 
 ## 1. Scope
@@ -34,6 +46,15 @@ the logical, process, development, physical, and scenario views of the system.
 - Multilingual support (optional future feature)
 - Data analytics or administrative reporting tools
 ## 2. References
+
+| ID | Source |
+|----|--------|
+| [1] | Kruchten, P. (1995). *The 4+1 View Model of Architecture*. IEEE Software, 12(6), 42–50. |
+| [2] | Django Documentation. https://docs.djangoproject.com |
+| [3] | PostgreSQL Documentation. https://www.postgresql.org/docs |
+| [4] | Python Software Foundation. https://www.python.org |
+| [5] | Mermaid Diagramming Tool. https://mermaid.js.org |
+| [6] | GitHub. https://github.com |
 
 ## 3. Software Architecture
 
@@ -147,6 +168,129 @@ Role-based access control and secure authentication are implemented
 with this in mind.
 
 ## 5. Logical Architecture
+
+### Overview
+
+The Logical Architecture describes the key classes of the Online Medical
+Clinic Reservation System, their attributes, responsibilities, and
+relationships. It supports the functional requirements by decomposing
+the system into meaningful objects derived from the problem domain.
+
+The system follows an object-oriented design. The core entities are
+`User`, `Patient`, `Doctor`, `Admin`, `Department`, `Appointment`,
+`Schedule`, and `AIChat`. These classes interact to support appointment
+booking, clinic management, and AI-assisted department guidance.
+
+### Key Design Decisions
+
+**1. User as a Base Class**
+`Patient`, `Doctor`, and `Admin` all inherit from `User`. This avoids
+duplicate authentication logic and supports role-based access control
+from a single login system. Every actor in the system is a User first,
+with their role determining what they can access.
+
+**2. Appointment as a Central Entity**
+`Appointment` connects `Patient` and `Doctor`. It is the core
+transaction object of the entire system — every booking interaction
+passes through it.
+
+**3. Schedule Separate from Appointment**
+`Schedule` represents a doctor's general availability (e.g., "every
+Monday 9am–12pm"). `Appointment` represents a specific confirmed
+booking within that availability. Keeping them separate allows the
+system to check availability before confirming a booking, which is
+what prevents double-booking.
+
+**4. AIChat Linked to Patient Only**
+The AI chatbot exists to guide patients who are unfamiliar with the
+clinic structure toward the right department based on their symptoms.
+Doctors already belong to a department and need no guidance. Admins
+manage the system and have no use for medical recommendations.
+Every relationship in a class diagram should exist for a reason —
+connecting AIChat to Doctor or Admin would add associations with zero
+functional purpose.
+
+### Class Diagram
+```mermaid
+classDiagram
+    class User {
+        +int id
+        +String username
+        +String email
+        +String password
+        +String role
+        +login()
+        +logout()
+    }
+
+    class Patient {
+        +String name
+        +String phone
+        +Date date_of_birth
+        +bookAppointment()
+        +cancelAppointment()
+    }
+
+    class Doctor {
+        +String specialization
+        +String bio
+        +viewSchedule()
+        +manageAppointments()
+    }
+
+    class Admin {
+        +manageDoctors()
+        +manageDepartments()
+        +viewAllAppointments()
+    }
+
+    class Department {
+        +String name
+        +String description
+    }
+
+    class Appointment {
+        +Date date
+        +Time time
+        +String status
+        +String notes
+        +confirm()
+        +cancel()
+    }
+
+    class Schedule {
+        +String day_of_week
+        +Time start_time
+        +Time end_time
+    }
+
+    class AIChat {
+        +String message
+        +String response
+        +DateTime timestamp
+        +getSuggestion()
+    }
+
+    User  "0..*" Appointment : books
+    Doctor "1" --> "0..*" Appointment : handles
+    Doctor "1" --> "1" Department : belongs to
+    Doctor "1" --> "0..*" Schedule : has
+    Patient "1" --> "0..*" AIChat : uses
+
+## B. Definitions
+
+| Term | Definition |
+|------|------------|
+| Appointment | A confirmed booking between a Patient and a Doctor at a specific date and time |
+| Authentication | The process of verifying a user's identity via username and password |
+| AI Chatbot | An automated assistant that recommends departments based on patient-described symptoms |
+| Department | A medical specialty unit within the clinic (e.g., Cardiology, Neurology) |
+| Double-Booking | A conflict where two appointments are scheduled for the same doctor at the same time — prevented by the system |
+| Django | A Python-based web framework used to build the backend of this system |
+| PostgreSQL | The relational database system used to store all clinic data |
+| Role-Based Access Control | A security model where system permissions are assigned based on a user's role (Patient, Doctor, Admin) |
+| Schedule | A doctor's defined availability — the days and times they are open for bookings |
+| UML | Unified Modeling Language — a standard notation for visualizing software architecture |
 
 ## 6. Process Architecture
 
@@ -397,6 +541,9 @@ sequenceDiagram
 ## 11. Quality
 
 ## Appendices
+- [A. Acronyms and Abbreviations](#a-acronyms-and-abbreviations)
+- [B. Definitions](#b-definitions)
+- [C. Design Principles](#c-design-principles)
 
 ### Acronyms and Abbreviations
 

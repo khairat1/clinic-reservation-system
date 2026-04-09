@@ -434,11 +434,11 @@ The system follows a 5-layer architecture. Each layer communicates only with the
 
 ```mermaid
 graph TD
-    A["🖥️ Layer 1 — Client Side (Browser)\nHTML · CSS · JavaScript"]
-    B["⚙️ Layer 2 — Django Application Layer\naccounts · appointments · clinic · chatbot"]
-    C["🔧 Layer 3 — Configuration\nclinic_project/settings.py · urls.py · wsgi.py"]
-    D["🗄️ Layer 4 — Data Layer\nDjango ORM · PostgreSQL"]
-    E["🤖 Layer 5 — External Services\nAI / LLM API via chatbot/services.py"]
+    A[" Layer 1 — Client Side (Browser)\nHTML · CSS · JavaScript"]
+    B[" Layer 2 — Django Application Layer\naccounts · appointments · clinic · chatbot"]
+    C[" Layer 3 — Configuration\nclinic_project/settings.py · urls.py · wsgi.py"]
+    D[" Layer 4 — Data Layer\nDjango ORM · PostgreSQL"]
+    E[" Layer 5 — External Services\nAI / LLM API via chatbot/services.py"]
 
     A -->|HTTP Request| B
     B -->|App routing| C
@@ -446,7 +446,6 @@ graph TD
     B -->|API call| E
 ```
 
-*Figure 1 — Main Package Diagram: 5-layer architecture of the clinic system*
 
 ---
 
@@ -477,7 +476,7 @@ sequenceDiagram
     V-->>B: Render confirmation.html
 ```
 
-*Figure 2 — MVT Pattern Diagram: appointments app booking flow*
+
 
 ---
 
@@ -908,22 +907,7 @@ The chatbot's response time depends on an external AI/LLM API and is partially o
 
 ---
 
-## 10.6 Scalability Growth Estimates
 
-```mermaid
-graph LR
-    A["Year 1 — 500 patients\nStandard deployment"]
-    B["Year 2 — 800 patients\nAdd DB indexing"]
-    C["Year 3 — 1,200 patients\nAdd caching layer"]
-    D["Future — 3,000+ patients\nLoad balancer + multi-server"]
-    A --> B --> C --> D
-```
-
-*Figure 4 — Scalability growth stages*
-
-The architecture already supports this growth path: Django ORM allows switching databases without code changes, static files can be moved to a CDN at any time, and the AI module is isolated in `services.py` for easy provider swapping.
-
----
 
 ## 10.7 Performance Constraints
 
@@ -955,31 +939,94 @@ The architecture already supports this growth path: Django ORM allows switching 
 
 ## 11.2 Quality Tree
 
-```mermaid
-mindmap
-  root((Quality))
-    Security
-      No plain-text passwords
-      CSRF protection on all forms
-      URL-based access control
-    Usability
-      Booking in under 3 steps
-      Mobile responsive UI
-    Reliability
-      0 double-bookings
-      99.5% uptime during clinic hours
-    Performance
-      Page load under 2 seconds
-      50 concurrent users supported
-    Maintainability
-      New feature per sprint
-      1 file to swap AI module
-    Portability
-      Runs on Linux and Windows
-      DB-agnostic via Django ORM
-```
+<svg width="100%" viewBox="0 0 680 500" xmlns="http://www.w3.org/2000/svg">
 
-*Figure 3 — Quality Tree: 6 quality branches with leaf scenarios for the clinic system*
+  <!-- ROOT -->
+  <rect x="270" y="16" width="140" height="40" rx="20" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+  <text x="340" y="36" text-anchor="middle" dominant-baseline="central" font-family="sans-serif" font-size="14" font-weight="500" fill="#3C3489">Quality</text>
+
+  <!-- Root to branch lines -->
+  <line x1="310" y1="56" x2="60"  y2="120" stroke="#888780" stroke-width="1"/>
+  <line x1="320" y1="56" x2="175" y2="120" stroke="#888780" stroke-width="1"/>
+  <line x1="335" y1="56" x2="295" y2="120" stroke="#888780" stroke-width="1"/>
+  <line x1="355" y1="56" x2="415" y2="120" stroke="#888780" stroke-width="1"/>
+  <line x1="368" y1="56" x2="535" y2="120" stroke="#888780" stroke-width="1"/>
+  <line x1="340" y1="56" x2="340" y2="300" stroke="#888780" stroke-width="0.8" stroke-dasharray="4 3"/>
+
+  <!-- SECURITY -->
+<rect x="10" y="120" width="100" height="36" rx="8" fill="#FAECE7" stroke="#185FA5" stroke-width="0.5"/>
+<text x="60" y="138" text-anchor="middle" dominant-baseline="central" font-family="sans-serif" font-size="14" font-weight="500" fill="#0C447C">Security</text>
+<line x1="60" y1="156" x2="60" y2="200" stroke="#888780" stroke-width="0.7"/>
+<rect x="8" y="200" width="104" height="32" rx="6" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+<text x="60" y="216" text-anchor="middle" dominant-baseline="central" font-family="sans-serif" font-size="12" fill="#444441">PBKDF2 hashing</text>
+<line x1="60" y1="232" x2="60" y2="252" stroke="#888780" stroke-width="0.7"/>
+<rect x="8" y="252" width="104" height="32" rx="6" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+<text x="60" y="268" text-anchor="middle" dominant-baseline="central" font-family="sans-serif" font-size="12" fill="#444441">CSRF protection</text>
+<line x1="60" y1="284" x2="60" y2="304" stroke="#888780" stroke-width="0.7"/>
+<rect x="2" y="304" width="116" height="32" rx="6" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+<text x="60" y="320" text-anchor="middle" dominant-baseline="central" font-family="sans-serif" font-size="12" fill="#444441">URL access control</text>
+
+  <!-- USABILITY -->
+  <rect x="125" y="120" width="100" height="36" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text x="175" y="138" text-anchor="middle" dominant-baseline="central" font-family="sans-serif" font-size="14" font-weight="500" fill="#085041">Usability</text>
+  <line x1="175" y1="156" x2="175" y2="200" stroke="#888780" stroke-width="0.7"/>
+  <rect x="121" y="200" width="108" height="32" rx="6" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="175" y="216" text-anchor="middle" dominant-baseline="central" font-family="sans-serif" font-size="12" fill="#444441">Booking in 3 steps</text>
+  <line x1="175" y1="232" x2="175" y2="252" stroke="#888780" stroke-width="0.7"/>
+  <rect x="123" y="252" width="104" height="32" rx="6" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="175" y="268" text-anchor="middle" dominant-baseline="central" font-family="sans-serif" font-size="12" fill="#444441">Mobile responsive</text>
+
+  <!-- RELIABILITY -->
+  <rect x="243" y="120" width="104" height="36" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+  <text x="295" y="138" text-anchor="middle" dominant-baseline="central" font-family="sans-serif" font-size="14" font-weight="500" fill="#0C447C">Reliability</text>
+  <line x1="295" y1="156" x2="295" y2="200" stroke="#888780" stroke-width="0.7"/>
+  <rect x="241" y="200" width="108" height="32" rx="6" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="295" y="216" text-anchor="middle" dominant-baseline="central" font-family="sans-serif" font-size="12" fill="#444441">0 double-bookings</text>
+  <line x1="295" y1="232" x2="295" y2="252" stroke="#888780" stroke-width="0.7"/>
+  <rect x="249" y="252" width="92" height="32" rx="6" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="295" y="268" text-anchor="middle" dominant-baseline="central" font-family="sans-serif" font-size="12" fill="#444441">99.5% uptime</text>
+
+  <!-- PERFORMANCE -->
+  <rect x="360" y="120" width="110" height="36" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+  <text x="415" y="138" text-anchor="middle" dominant-baseline="central" font-family="sans-serif" font-size="14" font-weight="500" fill="#633806">Performance</text>
+  <line x1="415" y1="156" x2="415" y2="200" stroke="#888780" stroke-width="0.7"/>
+  <rect x="361" y="200" width="108" height="32" rx="6" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="415" y="216" text-anchor="middle" dominant-baseline="central" font-family="sans-serif" font-size="12" fill="#444441">Pages under 2s</text>
+  <line x1="415" y1="232" x2="415" y2="252" stroke="#888780" stroke-width="0.7"/>
+  <rect x="355" y="252" width="120" height="32" rx="6" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="415" y="268" text-anchor="middle" dominant-baseline="central" font-family="sans-serif" font-size="12" fill="#444441">50 concurrent users</text>
+
+  <!-- MAINTAINABILITY -->
+  <rect x="472" y="120" width="126" height="36" rx="8" fill="#EAF3DE" stroke="#3B6D11" stroke-width="0.5"/>
+  <text x="535" y="138" text-anchor="middle" dominant-baseline="central" font-family="sans-serif" font-size="14" font-weight="500" fill="#27500A">Maintainability</text>
+  <line x1="535" y1="156" x2="535" y2="200" stroke="#888780" stroke-width="0.7"/>
+  <rect x="473" y="200" width="124" height="32" rx="6" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="535" y="216" text-anchor="middle" dominant-baseline="central" font-family="sans-serif" font-size="12" fill="#444441">1 sprint per feature</text>
+  <line x1="535" y1="232" x2="535" y2="252" stroke="#888780" stroke-width="0.7"/>
+  <rect x="479" y="252" width="112" height="32" rx="6" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="535" y="268" text-anchor="middle" dominant-baseline="central" font-family="sans-serif" font-size="12" fill="#444441">1 file to swap AI</text>
+
+  <!-- PORTABILITY -->
+  <rect x="272" y="300" width="136" height="36" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5" stroke-dasharray="5 3"/>
+  <text x="340" y="318" text-anchor="middle" dominant-baseline="central" font-family="sans-serif" font-size="14" font-weight="500" fill="#444441">Portability (LOW)</text>
+  <line x1="340" y1="336" x2="340" y2="356" stroke="#888780" stroke-width="0.7"/>
+  <line x1="305" y1="356" x2="375" y2="356" stroke="#888780" stroke-width="0.7"/>
+  <line x1="305" y1="356" x2="305" y2="376" stroke="#888780" stroke-width="0.7"/>
+  <line x1="375" y1="356" x2="375" y2="376" stroke="#888780" stroke-width="0.7"/>
+  <rect x="245" y="376" width="120" height="32" rx="6" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="305" y="392" text-anchor="middle" dominant-baseline="central" font-family="sans-serif" font-size="12" fill="#444441">Linux &amp; Windows</text>
+  <rect x="335" y="376" width="112" height="32" rx="6" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text x="391" y="392" text-anchor="middle" dominant-baseline="central" font-family="sans-serif" font-size="12" fill="#444441">DB-agnostic ORM</text>
+
+  <!-- Legend -->
+  <rect x="220" y="450" width="12" height="12" rx="2" fill="#FAECE7" stroke="#993C1D" stroke-width="0.5"/>
+  <text x="238" y="461" font-family="sans-serif" font-size="12" fill="#444441">HIGH priority</text>
+  <rect x="340" y="450" width="12" height="12" rx="2" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5" stroke-dasharray="4 2"/>
+  <text x="358" y="461" font-family="sans-serif" font-size="12" fill="#444441">LOW priority</text>
+
+</svg>
+
+
 
 ---
 

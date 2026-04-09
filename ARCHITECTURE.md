@@ -677,6 +677,18 @@ The following acronyms and abbreviations are used throughout this document:
 
 ### Definitions
 
+| Term | Definition |
+|------|------------|
+| Appointment | A confirmed booking between a Patient and a Doctor at a specific date and time |
+| Authentication | The process of verifying a user's identity via username and password |
+| AI Chatbot | An automated assistant that recommends departments based on patient-described symptoms |
+| Department | A medical specialty unit within the clinic (e.g., Cardiology, Neurology) |
+| Double-Booking | A conflict where two appointments are scheduled for the same doctor at the same time — prevented by the system |
+| Django | A Python-based web framework used to build the backend of this system |
+| PostgreSQL | The relational database system used to store all clinic data |
+| Role-Based Access Control | A security model where system permissions are assigned based on a user's role (Patient, Doctor, Admin) |
+| Schedule | A doctor's defined availability — the days and times they are open for bookings |
+| UML | Unified Modeling Language — a standard notation for visualizing software architecture |
 ### Design Principles
 
 This appendix documents the core design principles that guided

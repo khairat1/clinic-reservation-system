@@ -24,6 +24,19 @@
 
 ## List of Figures
 
+- [Figure 1 — High-Level Architecture Diagram](#high-level-architecture-diagram)
+- [Figure 2 — Class Diagram](#class-diagram)
+- [Figure 3 — Process Architecture: Patient Login and Appointment Booking](#61-patient-login-and-appointment-booking)
+- [Figure 4 — Process Architecture: AI Chatbot Symptom Analysis](#62-ai-chatbot-symptom-analysis)
+- [Figure 5 — Process Architecture: Doctor Views Their Schedule](#63-doctor-views-their-schedule)
+- [Figure 6 — Physical Architecture: Deployment Diagram](#83-deployment-diagram)
+- [Figure 7 — Scenarios: Use Case Diagram](#91-use-case-diagram)
+- [Figure 8 — Scenarios: Patient Books an Appointment](#92-scenario-1-patient-books-an-appointment)
+- [Figure 9 — Scenarios: Patient Uses AI Chatbot](#93-scenario-2-patient-uses-ai-chatbot)
+- [Figure 10 — Scenarios: Patient Browses Clinic Information](#94-scenario-3-patient-browses-clinic-information)
+- [Figure 11 — Scenarios: Admin Manages Doctors and Departments](#95-scenario-4-admin-manages-doctors-and-departments)
+
+
 ## 1. Scope
 
 This document describes the software architecture of the **Online Medical Clinic

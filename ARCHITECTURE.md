@@ -663,10 +663,33 @@ sequenceDiagram
 
 ## 11. Quality
 
-## Appendices
-- [A. Acronyms and Abbreviations](#a-acronyms-and-abbreviations)
-- [B. Definitions](#b-definitions)
-- [C. Design Principles](#c-design-principles)
+### A. Acronyms and Abbreviations
+
+The following acronyms and abbreviations are used throughout this document:
+
+| Abbreviation | Full Form | Description |
+|---|---|---|
+| AI | Artificial Intelligence | The technology powering the symptom-based chatbot module |
+| API | Application Programming Interface | A bridge that allows software components to communicate |
+| CSS | Cascading Style Sheets | The styling language used for the frontend user interface |
+| DB | Database | The persistent storage layer — PostgreSQL in this system |
+| Django | Django Web Framework | The Python-based backend framework used in this project |
+| HTTP | Hyper Text Transfer Protocol | The protocol used for communication between browser and server |
+| HTTPS | Hyper Text Transfer Protocol Secure | Encrypted version of HTTP used for secure data transmission |
+| JS | JavaScript | The scripting language used in the frontend |
+| MVC | Model View Controller | The architectural pattern Django is based on |
+| SQL | Structured Query Language | The language used to query and manage the PostgreSQL database |
+| UI | User Interface | The visual layer that users interact with in the browser |
+| UML | Unified Modeling Language | The standard notation used for architectural diagrams in this document |
+| URL | Uniform Resource Locator | A web address used to access system endpoints |
+| 4+1 | 4+1 Architectural View Model | The documentation framework used to describe this system's architecture |
+
+
+
+
+
+
+
 
 ### Acronyms and Abbreviations
 

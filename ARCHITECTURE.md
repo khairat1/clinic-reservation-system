@@ -623,6 +623,7 @@ sequenceDiagram
 **Actor:** Admin
 **Goal:** Add a new doctor and assign them to a department.
 **Precondition:** Admin is logged in with admin privileges.
+
 ```mermaid
 sequenceDiagram
     actor Admin
@@ -644,7 +645,9 @@ sequenceDiagram
     Database-->>DjangoBackend: Doctor saved
     DjangoBackend-->>Browser: Show success message
     Browser-->>Admin: Doctor added successfully
-    ...
+```
+
+---
 
 ## 10. Size and Performance
 

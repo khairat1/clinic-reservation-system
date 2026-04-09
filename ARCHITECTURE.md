@@ -300,6 +300,107 @@ classDiagram
 
 ## 6. Process Architecture
 
+The Process Architecture describes the dynamic behavior of the Online Medical 
+Clinic Reservation System at runtime. It illustrates how the system's components 
+interact during key operations, focusing on request flows, data exchange, and 
+decision points. This view is represented using UML Sequence Diagrams.
+
+### 6.1 Patient Login and Appointment Booking
+
+This diagram illustrates the most critical flow in the system — a patient 
+authenticating and booking an appointment with a doctor. It includes 
+double-booking prevention logic.
+
+```mermaid
+sequenceDiagram
+    actor Patient
+    participant Browser
+    participant Django
+    participant Database
+
+    Patient->>Browser: Enter username & password
+    Browser->>Django: POST /login
+    Django->>Database: Verify credentials
+    Database-->>Django: User confirmed
+    Django-->>Browser: Session started
+    Browser-->>Patient: Redirect to booking page
+
+    Patient->>Browser: Fill booking form (dept, doctor, date, time)
+    Browser->>Django: POST /book-appointment
+    Django->>Database: Query: is this slot already booked?
+    Database-->>Django: Return existing appointments
+
+    alt Slot is already taken
+        Django-->>Browser: Error: slot unavailable
+        Browser-->>Patient: Show error message
+    else Slot is free
+        Django->>Database: Save new appointment
+        Database-->>Django: Appointment saved
+        Django-->>Browser: Booking confirmed
+        Browser-->>Patient: Show confirmation page
+        Django->>Doctor: Send notification (email/alert)
+    end
+```
+
+### 6.2 AI Chatbot Symptom Analysis
+
+This diagram shows how the AI chatbot module processes patient symptoms 
+and recommends the appropriate department. It highlights the interaction 
+between Django and the AI module, as well as conversation logging.
+
+```mermaid
+sequenceDiagram
+    actor Patient
+    participant Browser
+    participant Django
+    participant AIModule
+    participant Database
+
+    Patient->>Browser: Type symptoms in chatbot
+    Browser->>Django: POST /chatbot
+    Django->>AIModule: Send symptoms for analysis
+    AIModule->>AIModule: Process symptoms & match department
+    AIModule-->>Django: Return recommended department
+    Django->>Database: Save conversation (symptoms + recommendation)
+    Database-->>Django: Conversation saved
+    Django-->>Browser: Send recommendation result
+    Browser-->>Patient: Display recommended department
+```
+
+### 6.3 Doctor Views Their Schedule
+
+This diagram illustrates how a doctor accesses their appointment schedule 
+after authentication. It handles both the case where appointments exist 
+and where none are found.
+
+```mermaid
+sequenceDiagram
+    actor Doctor
+    participant Browser
+    participant Django
+    participant Database
+
+    Doctor->>Browser: Enter username & password
+    Browser->>Django: POST /login
+    Django->>Database: Verify credentials
+    Database-->>Django: Doctor confirmed
+    Django-->>Browser: Session started
+    Browser-->>Doctor: Redirect to dashboard
+
+    Doctor->>Browser: Click "My Schedule"
+    Browser->>Django: GET /doctor/schedule
+    Django->>Database: Query appointments for this doctor
+    Database-->>Django: Return appointment records
+
+    alt No appointments found
+        Django-->>Browser: Empty schedule response
+        Browser-->>Doctor: Display "No appointments today"
+    else Appointments exist
+        Django-->>Browser: Send appointment list
+        Browser-->>Doctor: Display schedule with details
+    end
+```
+
 ## 7. Development Architecture
 
 ## 8. Physical Architecture

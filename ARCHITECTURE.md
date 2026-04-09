@@ -403,7 +403,213 @@ sequenceDiagram
     end
 ```
 
-## 7. Development Architecture
+
+# 7. Development Architecture
+
+The Development Architecture describes how the source code of the Online Medical Clinic Reservation System is organized into modules, layers, and packages. It shows the folder structure, the Django apps, how they depend on each other, and which technologies are used. This view is primarily intended for developers and project managers.
+
+---
+
+## 7.1 Project Modules
+
+The system is organized into four Django applications, a shared templates directory, a static files directory, and a project configuration package. Each app is independently maintainable and was developed by a separate team member.
+
+| **Module** | **Type** | **Responsibility** |
+|---|---|---|
+| Accounts | Django app | User registration, login, logout, role management |
+| Appointments | Django app | Appointment booking, cancellation, rescheduling |
+| Clinic | Django app | Doctors, departments, schedules, public pages, admin management |
+| Chatbot | Django app | AI-powered symptom-to-department assistant |
+| templates/ | Folder | All HTML template files for the entire system |
+| static/ | Folder | All CSS, JavaScript, and image files |
+| clinic_project/ | Config | Django settings, main URL router, WSGI entry point |
+| PostgreSQL | Database | Persistent storage for all system data |
+| AI / LLM API | External | Natural language processing for chatbot |
+
+---
+
+## 7.2 Main Package Diagram
+
+The system follows a 5-layer architecture. Each layer communicates only with the layer directly below it.
+
+```mermaid
+graph TD
+    A["🖥️ Layer 1 — Client Side (Browser)\nHTML · CSS · JavaScript"]
+    B["⚙️ Layer 2 — Django Application Layer\naccounts · appointments · clinic · chatbot"]
+    C["🔧 Layer 3 — Configuration\nclinic_project/settings.py · urls.py · wsgi.py"]
+    D["🗄️ Layer 4 — Data Layer\nDjango ORM · PostgreSQL"]
+    E["🤖 Layer 5 — External Services\nAI / LLM API via chatbot/services.py"]
+
+    A -->|HTTP Request| B
+    B -->|App routing| C
+    C -->|ORM queries| D
+    B -->|API call| E
+```
+
+*Figure 1 — Main Package Diagram: 5-layer architecture of the clinic system*
+
+---
+
+## 7.3 MVT Pattern — Appointments App
+
+Django follows the MVT (Model-View-Template) pattern. The appointments app is the most complex and demonstrates the full MVT flow clearly.
+
+| **MVT Component** | **File** | **Responsibility in Appointments** |
+|---|---|---|
+| Template (T) | book.html, confirmation.html, my_appointments.html, cancel.html, reschedule.html | HTML pages the patient sees — booking form, confirmation, list of appointments |
+| View (V) | views.py — book_appointment(), cancel_appointment(), get_appointments() | Receives form data, checks login, validates input, prevents double-booking |
+| Model (M) | models.py — Appointment, BookingForm | Defines appointment data structure and validates form fields before saving |
+
+```mermaid
+sequenceDiagram
+    participant B as Browser (Template)
+    participant V as views.py (View)
+    participant M as models.py (Model)
+    participant DB as PostgreSQL
+
+    B->>V: HTTP POST /book (form data)
+    V->>V: Check login via accounts app
+    V->>M: Validate BookingForm fields
+    V->>DB: Check for double-booking
+    DB-->>V: Slot available
+    V->>DB: Save Appointment
+    DB-->>V: Confirmed
+    V-->>B: Render confirmation.html
+```
+
+*Figure 2 — MVT Pattern Diagram: appointments app booking flow*
+
+---
+
+## 7.4 Module Descriptions
+
+### accounts app
+
+Responsible for all user-related functionality. Handles registration, login, logout, profile management, and role-based access control. Three roles exist: Patient, Doctor, and Admin. Files: `models.py`, `views.py`, `urls.py`, `forms.py`, `admin.py`, `migrations/`.
+
+### appointments app
+
+The core booking engine. Allows patients to select a department, doctor, date, and time slot. Prevents double-booking by checking existing records before confirming. Files: `models.py`, `views.py`, `urls.py`, `forms.py`, `admin.py`, `migrations/`.
+
+### clinic app
+
+Manages all clinic-related content. Public pages: Home, About, Departments, Doctors, Contact. Admin views allow adding doctors, departments, and setting weekly schedules. Files: `models.py`, `views.py`, `urls.py`, `admin.py`, `migrations/`.
+
+### chatbot app
+
+AI-powered symptom guidance assistant. Patient describes symptoms in natural language and the chatbot suggests the most appropriate department. All AI API communication is isolated inside `services.py` — if the provider changes, only this one file needs updating.
+
+| **File** | **Responsibility** |
+|---|---|
+| models.py | Defines ChatHistory model to store conversations |
+| views.py | Receives user messages, calls services, returns AI response |
+| urls.py | Routes /chat |
+| services.py | Handles all communication with the external AI API |
+| admin.py | Exposes chat history in Django admin panel |
+
+### templates/ folder
+
+Contains all HTML files organized into subfolders matching each app. `base.html` defines the shared layout — navigation, header, footer.
+
+```
+templates/
+|-- base.html              (shared layout + navbar)
+|-- accounts/              (login, register, profile)
+|-- appointments/          (book, confirm, cancel, reschedule, my-appointments)
+|-- clinic/                (home, about, departments, doctors, contact)
+|-- admin_panel/           (departments, doctors, schedules, appointments)
+|-- doctors/               (schedule, report)
+|-- chatbot/               (chat interface)
+```
+
+### static/ folder
+
+Contains all CSS, JavaScript, and image files.
+
+```
+static/
+|-- css/      (main.css, appointments.css, chatbot.css)
+|-- js/       (main.js, booking.js, chatbot.js, schedule.js)
+|-- images/   (logo.png, doctors/, departments/)
+```
+
+### Configuration (clinic_project/)
+
+| **File** | **Responsibility** |
+|---|---|
+| settings.py | Database config, installed apps, static files, middleware |
+| urls.py | Main URL router — delegates to each app urls.py |
+| wsgi.py | Web server entry point — starts Django for incoming requests |
+| asgi.py | Async server entry point |
+
+---
+
+## 7.5 Module Dependencies
+
+| **Module** | **Depends On** | **Reason** |
+|---|---|---|
+| Appointments | accounts | Patient must be logged in before booking |
+| Appointments | clinic | Booking form needs departments, doctors, and time slots |
+| Chatbot | accounts | User must be logged in before chatting |
+| Chatbot | AI / LLM API | Cannot generate suggestions alone — sends symptoms via services.py |
+| Clinic | accounts | Admin pages restricted to Admin role defined in accounts |
+| All apps | Django ORM | Every app reads/writes data through ORM which generates SQL |
+| All apps | settings.py | Every app registered in INSTALLED_APPS, relies on database config |
+
+### Key Dependency Rules
+
+- **Rule 1 — Layered dependency:** Each layer only calls the layer below it. Templates call views, views call models, models call the database.
+- **Rule 2 — No circular dependencies:** No app imports from another app directly. Cross-app data is passed through views and URL parameters.
+- **Rule 3 — External isolation:** AI API accessed only through `chatbot/services.py`. If provider changes, only one file needs updating.
+
+---
+
+## 7.6 Technology Stack
+
+| **Layer** | **Technology** | **Version** | **Purpose** | **Why Chosen** |
+|---|---|---|---|---|
+| Frontend | HTML5 | 5 | Page structure | Standard markup, works in all browsers |
+| Frontend | CSS3 | 3 | Visual styling | Controls colors, spacing, responsiveness |
+| Frontend | JavaScript | ES6+ | Interactive behavior | Booking form dynamics and chatbot UI |
+| Backend | Python | 3.x | Server-side language | Clean syntax, Django is built on it |
+| Backend | Django | 4.x | Web framework (MVT) | Rapid dev, built-in ORM, auth, admin |
+| Backend | Django ORM | built-in | Database abstraction | Write Python not SQL, prevents injection |
+| Database | PostgreSQL | 14+ | Relational database | Handles structured relational data perfectly |
+| AI Module | AI / LLM API | external | Symptom guidance | Natural language understanding for chatbot |
+| Server | WSGI | built-in | Web server interface | Standard Django deployment interface |
+| Version Control | Git + GitHub | latest | Source control | Required, supports branch workflow |
+| Documentation | Markdown | — | Architecture docs | Renders natively on GitHub |
+| Diagrams | Mermaid | — | Diagrams in Markdown | Renders in GitHub without external tools |
+
+---
+
+## 7.7 Project Folder Structure
+
+```
+clinic_project/                  (Root project folder)
+|-- manage.py                    (Django CLI tool)
+|-- requirements.txt             (Python dependencies)
+|-- clinic_project/              (Project configuration)
+|   |-- settings.py              (Database, apps, static config)
+|   |-- urls.py                  (Main URL router)
+|   |-- wsgi.py                  (Web server entry point)
+|   |-- asgi.py                  (Async server entry point)
+|-- accounts/                    (User management app)
+|   |-- models.py · views.py · urls.py · forms.py · admin.py · migrations/
+|-- appointments/                (Booking system app)
+|   |-- models.py · views.py · urls.py · forms.py · admin.py · migrations/
+|-- clinic/                      (Clinic management app)
+|   |-- models.py · views.py · urls.py · admin.py · migrations/
+|-- chatbot/                     (AI assistant app)
+|   |-- models.py · views.py · urls.py · services.py · admin.py · migrations/
+|-- templates/                   (All HTML files)
+|   |-- base.html · accounts/ · appointments/ · clinic/ · admin_panel/ · doctors/ · chatbot/
+|-- static/                      (All CSS, JS, Images)
+|   |-- css/ · js/ · images/
+```
+
+**Database tables (PostgreSQL):**
+`accounts_user` · `appointments_appointment` · `clinic_doctor` · `clinic_department` · `clinic_schedule` · `chatbot_history`
 
 ## 8. Physical Architecture
 
@@ -649,8 +855,198 @@ sequenceDiagram
 ---
 
 ## 10. Size and Performance
+his section documents the expected size of the Online Medical Clinic Reservation System and defines measurable performance targets. All figures are based on a single clinic complex. The system is classified as a small-to-medium web application and does not require enterprise-level infrastructure in Year 1.
+
+---
+
+## 10.1 System Size Estimates
+
+The system consists of 4 Django apps, approximately 25 HTML templates, 20 Python source files, and an estimated 3,000–5,000 lines of code. It serves around 500 registered patients, 20–30 doctors, and 8–10 departments in its first year, managed by 2–5 admin users. Data is stored across 6 PostgreSQL tables.
+
+---
+
+## 10.2 Response Time Targets
+
+| **Action** | **Target** | **Why** |
+|---|---|---|
+| Home / public pages | < 1.5 seconds | No or minimal DB queries |
+| Login / Register | < 1.0 second | Single user table lookup |
+| Booking form load | < 2.0 seconds | Fetches doctors, departments, slots |
+| Appointment confirmation | < 2.0 seconds | Writes to DB, checks double-booking |
+| Admin dashboard | < 3.0 seconds | Multiple queries across tables |
+| Chatbot first response | < 5.0 seconds | External AI API round-trip |
+
+> *Industry standard is under 2 seconds. The chatbot is the only exception due to its external AI API dependency.*
+
+---
+
+## 10.3 Throughput and Concurrent Users
+
+The system targets 20–30 concurrent users during normal hours and up to 50 at peak (typically mornings when patients compete for slots). This translates to 80–100 requests per minute normally and 250–300 at peak. These numbers are fully achievable on a standard single-server Django + PostgreSQL deployment.
+
+---
+
+## 10.4 Database Size Estimates
+
+| **Table** | **Year 1** | **Year 2** | **Year 3** |
+|---|---|---|---|
+| accounts_user | 500 rows | 800 rows | 1,200 rows |
+| appointments_appointment | 5,000 rows | 12,000 rows | 20,000 rows |
+| clinic_doctor | 30 rows | 35 rows | 40 rows |
+| clinic_department | 10 rows | 12 rows | 12 rows |
+| clinic_schedule | 200 rows | 250 rows | 300 rows |
+| chatbot_history | 2,000 rows | 5,000 rows | 9,000 rows |
+| **TOTAL** | **~7,740 rows** | **~18,097 rows** | **~30,552 rows** |
+
+> *~7,740 records after Year 1 — well within PostgreSQL optimal range. No partitioning or sharding needed at this scale.*
+
+---
+
+## 10.5 AI Chatbot Performance
+
+The chatbot's response time depends on an external AI/LLM API and is partially outside the system's control. The target is under 5 seconds per response, with a hard timeout of 10 seconds. If the API is unavailable, patients are automatically redirected to manual department selection. The chatbot is limited to 20 concurrent sessions due to typical API rate limits (~60 req/min). A disclaimer is always shown reminding patients that the chatbot does not replace professional medical diagnosis.
+
+---
+
+## 10.6 Scalability Growth Estimates
+
+```mermaid
+graph LR
+    A["Year 1 — 500 patients\nStandard deployment"]
+    B["Year 2 — 800 patients\nAdd DB indexing"]
+    C["Year 3 — 1,200 patients\nAdd caching layer"]
+    D["Future — 3,000+ patients\nLoad balancer + multi-server"]
+    A --> B --> C --> D
+```
+
+*Figure 4 — Scalability growth stages*
+
+The architecture already supports this growth path: Django ORM allows switching databases without code changes, static files can be moved to a CDN at any time, and the AI module is isolated in `services.py` for easy provider swapping.
+
+---
+
+## 10.7 Performance Constraints
+
+| **Constraint** | **Impact** | **Mitigation** |
+|---|---|---|
+| AI API rate limit (~60 req/min) | Chatbot may queue at peak | Limit concurrent sessions to 20 |
+| AI API latency (2–4 sec) | Chatbot slower than other pages | Show typing indicator while waiting |
+| Single server deployment | ~50 concurrent users max | Upgrade path exists for Year 2+ |
+| No caching in Year 1 | Repeated DB queries for same data | Add Django cache framework in Year 2 |
+| Shared PostgreSQL server | DB and app on same machine | Separate DB server as traffic grows |
 
 ## 11. Quality
+ This section defines the quality attributes of the Online Medical Clinic Reservation System. It includes a quality goals table, a quality tree diagram, and measurable quality scenarios for each attribute.
+
+---
+
+## 11.1 Quality Goals
+
+| **Quality Attribute** | **Priority** | **Reason** |
+|---|---|---|
+| Security | HIGH | Patient data and medical records must be protected. Unauthorized access is unacceptable in a medical system. |
+| Usability | HIGH | Patients of all ages and technical abilities must be able to book appointments easily without training. |
+| Reliability | HIGH | The system must prevent double-bookings and be available during clinic working hours without failures. |
+| Performance | HIGH | Pages must load fast. Slow systems cause patients to abandon bookings and lose trust in the clinic. |
+| Maintainability | MEDIUM | The team must be able to add new features or fix bugs without breaking existing functionality. |
+| Portability | LOW | The system should run on different operating systems and be easy to deploy on a new server if needed. |
+
+---
+
+## 11.2 Quality Tree
+
+```mermaid
+mindmap
+  root((Quality))
+    Security
+      No plain-text passwords
+      CSRF protection on all forms
+      URL-based access control
+    Usability
+      Booking in under 3 steps
+      Mobile responsive UI
+    Reliability
+      0 double-bookings
+      99.5% uptime during clinic hours
+    Performance
+      Page load under 2 seconds
+      50 concurrent users supported
+    Maintainability
+      New feature per sprint
+      1 file to swap AI module
+    Portability
+      Runs on Linux and Windows
+      DB-agnostic via Django ORM
+```
+
+*Figure 3 — Quality Tree: 6 quality branches with leaf scenarios for the clinic system*
+
+---
+
+## 11.3 Quality Scenarios
+
+The following scenarios describe the measurable behavior expected from the system for each quality attribute.
+
+### 11.3.1 Security
+
+**Scenario:** A patient attempts to access another patient's appointment page by manipulating the URL.  
+**Source:** Unauthorized user  
+**Stimulus:** Direct URL access to a restricted resource  
+**Response:** Django session middleware blocks the request and returns HTTP 403  
+**Measure:** 0 unauthorized data exposures; all passwords hashed using PBKDF2; CSRF tokens validated on every form submission
+
+---
+
+### 11.3.2 Usability
+
+**Scenario:** A first-time patient visits the clinic website and wants to book an appointment.  
+**Source:** Patient (no prior training)  
+**Stimulus:** User navigates the booking flow for the first time  
+**Response:** The system guides the user through department → doctor → date/time selection in 3 steps  
+**Measure:** Booking completed in under 3 minutes; UI is fully responsive on mobile and desktop
+
+---
+
+### 11.3.3 Reliability
+
+**Scenario:** Two patients attempt to book the same doctor slot at the same time.  
+**Source:** Two concurrent patients  
+**Stimulus:** Simultaneous booking requests for the same time slot  
+**Response:** Django database transaction ensures only one booking succeeds; the second receives a clear conflict message  
+**Measure:** 0 double-bookings allowed; system available 99.5% of the time during clinic working hours
+
+---
+
+### 11.3.4 Performance
+
+**Scenario:** A patient loads the Doctors listing page during peak hours.  
+**Source:** Patient  
+**Stimulus:** HTTP GET request to `/doctors/`  
+**Response:** Django ORM fetches data using optimized queries; PostgreSQL indexed fields reduce query time  
+**Measure:** Page load under 2 seconds; system handles up to 50 concurrent users without degradation
+
+---
+
+### 11.3.5 Maintainability
+
+**Scenario:** The team needs to swap the AI chatbot provider or add a new medical department.  
+**Source:** Developer  
+**Stimulus:** Change request to an existing feature  
+**Response:** The modular MVT structure allows changes to one Django app without affecting others; AI logic is isolated in `services.py`  
+**Measure:** New feature deliverable within one sprint; replacing the AI module requires changing only 1 file
+
+---
+
+## 11.4 Quality Summary
+
+| **Attribute** | **Priority** | **Key Target** | **How Achieved** |
+|---|---|---|---|
+| Security | HIGH | 0 plain-text passwords, 100% CSRF protection | Django built-in: PBKDF2 hashing, CSRF middleware, ORM |
+| Usability | HIGH | Booking in under 3 steps, mobile responsive | Clean HTML templates, responsive CSS, inline errors |
+| Reliability | HIGH | 99.5% uptime, 0 double-bookings | DB transaction check, Django session management |
+| Performance | HIGH | Pages < 2s, 50 concurrent users supported | Django ORM optimization, PostgreSQL indexing |
+| Maintainability | MEDIUM | New feature in 1 sprint, 1 file to swap AI | MVT pattern, isolated apps, services.py for AI |
+| Portability | LOW | Runs on Linux/Windows, DB-agnostic | Django ORM, Python cross-platform, WSGI standard |
 
 ## Appendices
 

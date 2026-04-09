@@ -285,6 +285,7 @@ classDiagram
 
 ## B. Definitions
 
+
 | Term | Definition |
 |------|------------|
 | Appointment | A confirmed booking between a Patient and a Doctor at a specific date and time |
@@ -297,6 +298,8 @@ classDiagram
 | Role-Based Access Control | A security model where system permissions are assigned based on a user's role (Patient, Doctor, Admin) |
 | Schedule | A doctor's defined availability — the days and times they are open for bookings |
 | UML | Unified Modeling Language — a standard notation for visualizing software architecture |
+```
+
 
 ## 6. Process Architecture
 

@@ -560,7 +560,7 @@ sequenceDiagram
     DjangoBackend->>Database: Save appointment
     Database-->>DjangoBackend: Appointment saved
     DjangoBackend-->>Browser: Show confirmation message
-    Browser-->>Patient: Appointment confirmed ✅
+    Browser-->>Patient: Appointment confirmed
 ```
 
 ---
@@ -643,7 +643,7 @@ sequenceDiagram
     DjangoBackend->>Database: Save new doctor
     Database-->>DjangoBackend: Doctor saved
     DjangoBackend-->>Browser: Show success message
-    Browser-->>Admin: Doctor added successfully 
+    Browser-->>Admin: Doctor added successfully
     ...
 
 ## 10. Size and Performance

@@ -4,7 +4,7 @@
 | Name | Student ID | GitHub Username |
 |------|------------|-----------------|
 | Khairat Joulak | 230513449 | khairat1 |
-| Mahmoud Dib | YOUR_ID | YOUR_GITHUB |
+| Mahmoud Dib | 220513762 | mdib2602-bot |
 | Abdulrahman Birecikli | 220513508 | A-jkjk |
 | Maymouna Salameh | 230513607 | m4xn |
 | Bisan Ibrahim | 220513038 | bisan7 |

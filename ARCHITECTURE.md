@@ -663,6 +663,8 @@ sequenceDiagram
 
 ## 11. Quality
 
+## Appendices
+
 ### A. Acronyms and Abbreviations
 
 The following acronyms and abbreviations are used throughout this document:
@@ -683,15 +685,6 @@ The following acronyms and abbreviations are used throughout this document:
 | UML | Unified Modeling Language | The standard notation used for architectural diagrams in this document |
 | URL | Uniform Resource Locator | A web address used to access system endpoints |
 | 4+1 | 4+1 Architectural View Model | The documentation framework used to describe this system's architecture |
-
-
-
-
-
-
-
-
-### Acronyms and Abbreviations
 
 ### Definitions
 

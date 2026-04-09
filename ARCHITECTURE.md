@@ -2,6 +2,12 @@
 
 ## Change History
 
+> 👤 [View Git Blame](https://github.com/khairat1/clinic-reservation-system/blame/main/ARCHITECTURE.md)
+
+| Version | Date | Author | Description |
+|---|---|---|---|
+| 1.0 | April 2026 | Team Aware | Initial release |
+
 ## Table of Contents
 
 1. [Scope](#1-scope)

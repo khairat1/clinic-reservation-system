@@ -6,7 +6,7 @@
 
 | Version | Date | Author | Description |
 |---|---|---|---|
-| 1.0 | April 2026 | Team Aware | Initial release |
+| 1.0 | April 2026 | Team   | Initial release |
 
 ## Table of Contents
 

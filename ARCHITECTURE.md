@@ -946,26 +946,20 @@ graph LR
     Q --> REL[Reliability]
     Q --> PER[Performance]
     Q --> MAI[Maintainability]
-    Q --> POR[Portability - LOW priority]
+    Q --> POR[Portability\nLOW priority]
 
-    SEC --> S1[PBKDF2 password hashing]
-    SEC --> S2[CSRF protection on all forms]
-    SEC --> S3[URL-based access control per role]
+    SEC --> S1[PBKDF2 hashing & CSRF protection]
+    SEC --> S2[URL-based access control]
 
-    USA --> U1[Appointment booking in 3 steps]
-    USA --> U2[Mobile-responsive design]
+    USA --> U1[Booking in 3 steps & mobile responsive]
 
-    REL --> R1[Zero double-bookings enforced]
-    REL --> R2[99.5% uptime target]
+    REL --> R1[No double-bookings & 99.5% uptime]
 
-    PER --> P1[Page load under 2 seconds]
-    PER --> P2[Supports 50 concurrent users]
+    PER --> P1[Pages under 2s & 50 concurrent users]
 
-    MAI --> M1[One sprint to add a new feature]
-    MAI --> M2[AI module swappable in one file]
+    MAI --> M1[1 sprint per feature & swappable AI module]
 
-    POR --> O1[Runs on Linux and Windows]
-    POR --> O2[DB-agnostic via Django ORM]
+    POR --> O1[Linux & Windows via Django ORM]
 ```
 
 ## 11.3 Quality Scenarios

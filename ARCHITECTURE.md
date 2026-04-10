@@ -8,19 +8,22 @@
 |---|---|---|---|
 | 1.0 | April 2026 | Team   | Initial release |
 
-## Table of Contents
+## List of Figures
 
-1. [Scope](#1-scope)
-2. [References](#2-references)
-3. [Software Architecture](#3-software-architecture)
-4. [Architectural Goals & Constraints](#4-architectural-goals--constraints)
-5. [Logical Architecture](#5-logical-architecture)
-6. [Process Architecture](#6-process-architecture)
-7. [Development Architecture](#7-development-architecture)
-8. [Physical Architecture](#8-physical-architecture)
-9. [Scenarios](#9-scenarios)
-10. [Size and Performance](#10-size-and-performance)
-11. [Quality](#11-quality)
+- [Figure 1 — High-Level Architecture Diagram](#high-level-architecture-diagram)
+- [Figure 2 — Class Diagram](#class-diagram)
+- [Figure 3 — Process Architecture: Patient Login and Appointment Booking](#61-patient-login-and-appointment-booking)
+- [Figure 4 — Process Architecture: AI Chatbot Symptom Analysis](#62-ai-chatbot-symptom-analysis)
+- [Figure 5 — Process Architecture: Doctor Views Their Schedule](#63-doctor-views-their-schedule)
+- [Figure 6 — Physical Architecture: Deployment Diagram](#83-deployment-diagram)
+- [Figure 7 — Development Architecture: Main Package Diagram](#72-main-package-diagram)
+- [Figure 8 — Development Architecture: MVT Pattern — Appointments App](#73-mvt-pattern--appointments-app)
+- [Figure 9 — Scenarios: Use Case Diagram](#91-use-case-diagram)
+- [Figure 10 — Scenarios: Patient Books an Appointment](#92-scenario-1-patient-books-an-appointment)
+- [Figure 11 — Scenarios: Patient Uses AI Chatbot](#93-scenario-2-patient-uses-ai-chatbot)
+- [Figure 12 — Scenarios: Patient Browses Clinic Information](#94-scenario-3-patient-browses-clinic-information)
+- [Figure 13 — Scenarios: Admin Manages Doctors and Departments](#95-scenario-4-admin-manages-doctors-and-departments)
+- [Figure 14 — Quality Tree](#112-quality-tree)
 
 ## List of Figures
 

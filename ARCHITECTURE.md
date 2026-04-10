@@ -940,7 +940,7 @@ The chatbot's response time depends on an external AI/LLM API and is partially o
 ## 11.2 Quality Tree
 
 ```mermaid
-graph TD
+graph LR
     Q[Quality] --> SEC[Security]
     Q --> USA[Usability]
     Q --> REL[Reliability]

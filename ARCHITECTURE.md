@@ -958,7 +958,8 @@ mindmap
     Maintainability
       One sprint to add a new feature
       AI module swappable in one file
-    Portability["Portability (LOW priority)"]
+    Portability
+      LOW priority
       Runs on Linux and Windows
       DB-agnostic via Django ORM
 ```

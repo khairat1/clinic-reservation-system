@@ -940,28 +940,32 @@ The chatbot's response time depends on an external AI/LLM API and is partially o
 ## 11.2 Quality Tree
 
 ```mermaid
-mindmap
-  root((Quality))
-    Security
-      PBKDF2 password hashing
-      CSRF protection on all forms
-      URL-based access control per role
-    Usability
-      Appointment booking in 3 steps
-      Mobile-responsive design
-    Reliability
-      Zero double-bookings enforced
-      99.5% uptime target
-    Performance
-      Page load under 2 seconds
-      Supports 50 concurrent users
-    Maintainability
-      One sprint to add a new feature
-      AI module swappable in one file
-    Portability
-      LOW priority
-      Runs on Linux and Windows
-      DB-agnostic via Django ORM
+graph TD
+    Q[Quality] --> SEC[Security]
+    Q --> USA[Usability]
+    Q --> REL[Reliability]
+    Q --> PER[Performance]
+    Q --> MAI[Maintainability]
+    Q --> POR[Portability - LOW priority]
+
+    SEC --> S1[PBKDF2 password hashing]
+    SEC --> S2[CSRF protection on all forms]
+    SEC --> S3[URL-based access control per role]
+
+    USA --> U1[Appointment booking in 3 steps]
+    USA --> U2[Mobile-responsive design]
+
+    REL --> R1[Zero double-bookings enforced]
+    REL --> R2[99.5% uptime target]
+
+    PER --> P1[Page load under 2 seconds]
+    PER --> P2[Supports 50 concurrent users]
+
+    MAI --> M1[One sprint to add a new feature]
+    MAI --> M2[AI module swappable in one file]
+
+    POR --> O1[Runs on Linux and Windows]
+    POR --> O2[DB-agnostic via Django ORM]
 ```
 
 ## 11.3 Quality Scenarios

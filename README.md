@@ -16,3 +16,5 @@ and time. The system includes an AI chatbot assistant that guides patients
 to the right department based on their symptoms.
 
 ## Architecture Link
+
+[View Architecture Documentation](https://github.com/khairat1/clinic-reservation-system/blob/main/ARCHITECTURE.md)

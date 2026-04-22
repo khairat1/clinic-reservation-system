@@ -12,7 +12,7 @@ def register_view(request):
             user = form.save()
             login(request, user)
             messages.success(request, 'Account created successfully.')
-            return redirect('home')
+            return redirect('clinic:home')
     else:
         form = RegisterForm()
     return render(request, 'accounts/register.html', {'form': form})
@@ -25,7 +25,7 @@ def login_view(request):
             user = form.get_user()
             login(request, user)
             messages.success(request, 'Logged in successfully.')
-            return redirect('home')
+            return redirect('clinic:home')
     else:
         form = LoginForm()
     return render(request, 'accounts/login.html', {'form': form})

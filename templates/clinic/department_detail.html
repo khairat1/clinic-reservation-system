@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="section">
+    <div class="department-header">
+        <img src="{% static department.image %}" alt="{{ department.name }}">
+        <h2>{{ department.name }}</h2>
+        <p>{{ department.description }}</p>
+    </div>
+
+    <h3>Doctors in this Department</h3>
+    <div class="cards-grid">
+        {% for doctor in doctors %}
+        <div class="card">
+            <img src="{% static doctor.image %}" alt="{{ doctor.name }}">
+            <h3>{{ doctor.name }}</h3>
+            <p>{{ doctor.description|truncatewords:20 }}</p>
+<a href="#">Book Appointment</a>
+        </div>
+        {% empty %}
+        <p>No doctors available in this department yet.</p>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

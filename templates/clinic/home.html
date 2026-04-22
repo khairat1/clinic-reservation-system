@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<div class="hero">
+    <h1>Welcome to Our Medical Clinic</h1>
+    <p>Quality healthcare for you and your family</p>
+    <a href="{% url 'clinic:departments_list' %}" class="btn-primary">View Departments</a>
+</div>
+
+<!-- Departments Section -->
+<section class="section">
+    <h2>Our Departments</h2>
+    <div class="cards-grid">
+        {% for department in departments %}
+        <div class="card">
+            <img src="{% static department.image %}" alt="{{ department.name }}">
+            <h3>{{ department.name }}</h3>
+            <p>{{ department.description|truncatewords:20 }}</p>
+            <a href="{% url 'clinic:department_detail' department.pk %}">Learn More</a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Doctors Section -->
+<section class="section">
+    <h2>Our Doctors</h2>
+    <div class="cards-grid">
+        {% for doctor in doctors %}
+        <div class="card">
+            <img src="{% static doctor.image %}" alt="{{ doctor.name }}">
+            <h3>{{ doctor.name }}</h3>
+            <p>{{ doctor.description|truncatewords:15 }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

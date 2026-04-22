@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="section">
+    <h2>Add Department</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Department</button>
+        <a href="{% url 'clinic:admin_dashboard' %}">Cancel</a>
+    </form>
+</section>
+
+{% endblock %}

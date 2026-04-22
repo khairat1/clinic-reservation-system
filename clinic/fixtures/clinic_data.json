@@ -1,0 +1,158 @@
+[
+  {
+    "model": "clinic.department",
+    "pk": 1,
+    "fields": {
+      "name": "Cardiology",
+      "description": "Our Cardiology department specializes in diagnosing and treating diseases of the heart and cardiovascular system. Our team of expert cardiologists provides comprehensive care for conditions including coronary artery disease, heart failure, arrhythmias, and hypertension. We offer advanced diagnostic services including echocardiography, stress testing, and cardiac catheterization.",
+      "image": "departments/cardiology.svg"
+    }
+  },
+  {
+    "model": "clinic.department",
+    "pk": 2,
+    "fields": {
+      "name": "Neurology",
+      "description": "The Neurology department provides expert diagnosis and treatment of disorders affecting the brain, spinal cord, and nervous system. Our neurologists are highly experienced in managing conditions such as stroke, epilepsy, Parkinson's disease, multiple sclerosis, migraines, and dementia. We use the latest neuroimaging and diagnostic technologies.",
+      "image": "departments/neurology.svg"
+    }
+  },
+  {
+    "model": "clinic.department",
+    "pk": 3,
+    "fields": {
+      "name": "Pediatrics",
+      "description": "The Pediatrics department is dedicated to the health and well-being of infants, children, and adolescents from birth through 18 years of age. Our compassionate pediatricians provide preventive care, vaccinations, growth monitoring, and treatment of childhood illnesses. We create a friendly and welcoming environment where children feel safe and comfortable.",
+      "image": "departments/pediatrics.svg"
+    }
+  },
+  {
+    "model": "clinic.department",
+    "pk": 4,
+    "fields": {
+      "name": "General Medicine",
+      "description": "Our General Medicine department serves as the first point of contact for patients seeking medical care. Our internists and general practitioners provide comprehensive diagnosis and management of a wide spectrum of conditions affecting adults. We focus on preventive care, chronic disease management, and coordinating specialist referrals when needed.",
+      "image": "departments/general_medicine.svg"
+    }
+  },
+  {
+    "model": "clinic.doctor",
+    "pk": 1,
+    "fields": {
+      "name": "Dr. Ahmed Al-Rashid",
+      "department": 1,
+      "description": "Dr. Ahmed Al-Rashid is an Interventional Cardiologist with over 12 years of experience in treating complex coronary artery disease. He specializes in coronary angioplasty and stenting procedures and is known for his patient-centered approach to care.",
+      "image": "doctors/dr_ahmed_alrashid.svg"
+    }
+  },
+  {
+    "model": "clinic.doctor",
+    "pk": 2,
+    "fields": {
+      "name": "Dr. Sarah Mitchell",
+      "department": 1,
+      "description": "Dr. Sarah Mitchell is a Cardiac Electrophysiologist specializing in the diagnosis and treatment of heart rhythm disorders. With expertise in catheter ablation and implantable device therapy, she has helped hundreds of patients manage atrial fibrillation and ventricular tachycardia.",
+      "image": "doctors/dr_sarah_mitchell.svg"
+    }
+  },
+  {
+    "model": "clinic.doctor",
+    "pk": 3,
+    "fields": {
+      "name": "Dr. Omar Yıldız",
+      "department": 1,
+      "description": "Dr. Omar Yıldız is a Heart Failure specialist with 9 years of clinical experience. He focuses on advanced heart failure management, cardiac rehabilitation, and preventive cardiology. Dr. Yıldız is passionate about educating patients on lifestyle modifications to improve cardiovascular health.",
+      "image": "doctors/dr_omar_yildiz.svg"
+    }
+  },
+  {
+    "model": "clinic.doctor",
+    "pk": 4,
+    "fields": {
+      "name": "Dr. Layla Hassan",
+      "department": 2,
+      "description": "Dr. Layla Hassan is a Stroke Neurologist and cerebrovascular disease specialist with extensive experience in acute stroke management and post-stroke rehabilitation. She has published research on stroke prevention and advocates for raising awareness about stroke warning signs.",
+      "image": "doctors/dr_layla_hassan.svg"
+    }
+  },
+  {
+    "model": "clinic.doctor",
+    "pk": 5,
+    "fields": {
+      "name": "Dr. James Carter",
+      "department": 2,
+      "description": "Dr. James Carter is an Epilepsy Specialist and Clinical Neurophysiologist with over 15 years of experience. He is highly skilled in EEG interpretation and the management of drug-resistant epilepsy, taking a holistic approach to neurological care.",
+      "image": "doctors/dr_james_carter.svg"
+    }
+  },
+  {
+    "model": "clinic.doctor",
+    "pk": 6,
+    "fields": {
+      "name": "Dr. Fatima Al-Zahra",
+      "department": 2,
+      "description": "Dr. Fatima Al-Zahra specializes in Movement Disorders including Parkinson's disease, essential tremor, and dystonia. She is experienced in Deep Brain Stimulation therapy and is committed to improving her patients' independence through personalized treatment plans.",
+      "image": "doctors/dr_fatima_alzahra.svg"
+    }
+  },
+  {
+    "model": "clinic.doctor",
+    "pk": 7,
+    "fields": {
+      "name": "Dr. Emily Chen",
+      "department": 3,
+      "description": "Dr. Emily Chen is a General Pediatrician with 8 years of experience caring for children from newborns to teenagers. She is passionate about preventive care and early developmental screening and is known for her warm, gentle approach that puts children immediately at ease.",
+      "image": "doctors/dr_emily_chen.svg"
+    }
+  },
+  {
+    "model": "clinic.doctor",
+    "pk": 8,
+    "fields": {
+      "name": "Dr. Hassan Al-Amin",
+      "department": 3,
+      "description": "Dr. Hassan Al-Amin is a Pediatric Cardiologist specializing in congenital heart defects and acquired heart disease in children. He provides diagnostic evaluation and long-term management for children with complex cardiac conditions and works closely with families throughout.",
+      "image": "doctors/dr_hassan_alamin.svg"
+    }
+  },
+  {
+    "model": "clinic.doctor",
+    "pk": 9,
+    "fields": {
+      "name": "Dr. Sophia Müller",
+      "department": 3,
+      "description": "Dr. Sophia Müller is a Neonatal Specialist with expertise in the care of premature and critically ill newborns. She has spent over a decade working in neonatal intensive care and provides compassionate support to families during some of the most challenging moments of their lives.",
+      "image": "doctors/dr_sophia_muller.svg"
+    }
+  },
+  {
+    "model": "clinic.doctor",
+    "pk": 10,
+    "fields": {
+      "name": "Dr. Anna Kowalski",
+      "department": 4,
+      "description": "Dr. Anna Kowalski is an Internal Medicine specialist with broad expertise in diagnosing and managing complex medical conditions in adults. She focuses on evidence-based medicine and is especially experienced in managing patients with multiple chronic conditions simultaneously.",
+      "image": "doctors/dr_anna_kowalski.svg"
+    }
+  },
+  {
+    "model": "clinic.doctor",
+    "pk": 11,
+    "fields": {
+      "name": "Dr. Mehmet Kaya",
+      "department": 4,
+      "description": "Dr. Mehmet Kaya is a Family Medicine physician committed to providing continuous, comprehensive healthcare for individuals and families of all ages. He emphasizes preventive care, health education, and building long-term patient relationships.",
+      "image": "doctors/dr_mehmet_kaya.svg"
+    }
+  },
+  {
+    "model": "clinic.doctor",
+    "pk": 12,
+    "fields": {
+      "name": "Dr. Rachel Green",
+      "department": 4,
+      "description": "Dr. Rachel Green is a Geriatrician specializing in the healthcare of elderly patients. She has deep expertise in managing age-related conditions including dementia, osteoporosis, and falls prevention. Dr. Green works closely with patients' families to help older adults maintain their independence.",
+      "image": "doctors/dr_rachel_green.svg"
+    }
+  }
+]

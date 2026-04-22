@@ -14,17 +14,12 @@
             <h2>MediClinic</h2>
         </div>
         <nav class="sidebar-nav">
-            <a href="{% url 'home' %}">Home</a>
-            {# Maymouna — replace # with url departments when clinic.urls is ready #}
-            <a href="#">Departments</a>
-            {# Maymouna — replace # with url doctors when clinic.urls is ready #}
-            <a href="#">Doctors</a>
+            <a href="{% url 'clinic:home' %}">Home</a>
+            <a href="{% url 'clinic:departments_list' %}">Departments</a>
+            <a href="{% url 'clinic:doctors_list' %}">Doctors</a>
             {% if user.is_authenticated %}
-                {# Bisan — replace # with url book_step1 when appointments.urls is ready #}
                 <a href="#">Book Appointment</a>
-                {# Bisan — replace # with url my_appointments when appointments.urls is ready #}
                 <a href="#">My Appointments</a>
-                {# Mahmoud — replace # with url chatbot when chatbot.urls is ready #}
                 <a href="#">Chatbot</a>
                 <a href="{% url 'logout' %}">Logout</a>
             {% else %}
@@ -36,7 +31,6 @@
 
     <!-- Main Content -->
     <div class="main-content">
-        <!-- Messages -->
         {% if messages %}
             <div class="messages">
                 {% for message in messages %}
@@ -45,7 +39,6 @@
             </div>
         {% endif %}
 
-        <!-- Page Content -->
         {% block content %}
         {% endblock %}
     </div>

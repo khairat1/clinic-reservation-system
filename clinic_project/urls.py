@@ -16,7 +16,7 @@ urlpatterns = [
     
     # Bisan — appointments app (booking steps, my appointments, cancel)
     # Uncomment this when Bisan pushes her urls.py
-    # path('appointments/', include('appointments.urls')),
+    path('appointments/', include('appointments.urls')),
     
     # Mahmoud — chatbot app (chatbot interface)
     # Uncomment this when Mahmoud pushes his urls.py

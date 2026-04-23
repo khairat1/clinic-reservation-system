@@ -16,7 +16,7 @@
     <div class="cards-grid">
         {% for department in departments %}
         <div class="card">
-            <img src="{% static department.image %}" alt="{{ department.name }}">
+            <img src="/static/images/{{ department.image }}" alt="{{ department.name }}">
             <h3>{{ department.name }}</h3>
             <p>{{ department.description|truncatewords:20 }}</p>
             <a href="{% url 'clinic:department_detail' department.pk %}">Learn More</a>
@@ -31,7 +31,7 @@
     <div class="cards-grid">
         {% for doctor in doctors %}
         <div class="card">
-            <img src="{% static doctor.image %}" alt="{{ doctor.name }}">
+            <img src="/static/images/{{ doctor.image }}" alt="{{ doctor.name }}">
             <h3>{{ doctor.name }}</h3>
             <p>{{ doctor.description|truncatewords:15 }}</p>
         </div>

@@ -77,8 +77,9 @@ def booking_step4(request):
     schedules = Schedule.objects.filter(doctor=doctor, day=day_name)
 
     booked_times = list(Appointment.objects.filter(
-        doctor=doctor,
-        date=selected_date
+    doctor=doctor,
+    date=selected_date,
+    status='confirmed'
     ).values_list('time', flat=True))
 
     all_slots = []
@@ -120,21 +121,23 @@ def booking_step5(request):
 
         already_booked = Appointment.objects.filter(
             doctor=doctor,
-            date=date_str,
+             date=date_str,
             time=time_str,
+            status='confirmed',
         ).exists()
-
         if already_booked:
             messages.error(request, 'Sorry, this slot was just taken. Please choose another time.')
             return redirect('booking_step4')
 
-        appointment = Appointment.objects.create(
-            patient=request.user,
+        appointment, created = Appointment.objects.update_or_create(
             doctor=doctor,
             date=date_str,
-            time=time_str,
-            status='confirmed',
-        )
+         time=time_str,
+         defaults={
+        'patient': request.user,
+        'status': 'confirmed',
+    }
+)
 
         request.session.pop('doctor_id', None)
         request.session.pop('department_id', None)

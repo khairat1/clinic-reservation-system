@@ -8,7 +8,7 @@
     <div class="cards-grid">
         {% for doctor in doctors %}
         <div class="card">
-            <img src="{% static doctor.image %}" alt="{{ doctor.name }}">
+            <img src="/static/images/{{ doctor.image }}" alt="{{ doctor.name }}">
             <h3>{{ doctor.name }}</h3>
             <p>{{ doctor.description|truncatewords:20 }}</p>
 <a href="#">Book Appointment</a>

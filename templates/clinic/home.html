@@ -34,6 +34,9 @@
             <img src="/static/images/{{ doctor.image }}" alt="{{ doctor.name }}">
             <h3>{{ doctor.name }}</h3>
             <p>{{ doctor.description|truncatewords:15 }}</p>
+            <a href="{% url 'booking_step3' %}?doctor_id={{ doctor.pk }}" style="color: #0D47A1; font-weight: 600; font-size: 14px;">Book Appointment</a>
+            
+
         </div>
         {% endfor %}
     </div>

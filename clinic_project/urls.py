@@ -20,5 +20,5 @@ urlpatterns = [
     
     # Mahmoud — chatbot app (chatbot interface)
     # Uncomment this when Mahmoud pushes his urls.py
-    # path('chatbot/', include('chatbot.urls')),
+    path('chatbot/', include('chatbot.urls')),
 ]

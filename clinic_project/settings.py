@@ -12,9 +12,21 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 
+import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Load environment variables from .env file
+env_path = BASE_DIR / '.env'
+if env_path.exists():
+    with open(env_path) as f:
+        for line in f:
+            if line.strip() and not line.startswith('#'):
+                key, value = line.strip().split('=', 1)
+                os.environ[key.strip()] = value.strip().strip("'\"")
+
+GROQ_API_KEY = os.environ.get('GROQ_API_KEY', '')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
@@ -25,8 +37,7 @@ SECRET_KEY = 'django-insecure-5t9$w29h&3^qk6ejoip54ga48x=(gc8!0#se4__98q@1vy$8_^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*','[IP_ADDRESS]','testserver', '127.0.0.1', 'localhost']
 
 # Application definition
 

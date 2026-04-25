@@ -6,6 +6,10 @@ from django.views.decorators.http import require_POST
 from .services import get_department_recommendation
 from .models import ChatHistory
 
+@login_required
+def chatbot_page(request):
+    return render(request, 'chatbot/chatbot.html')
+
 
 @login_required
 @require_POST

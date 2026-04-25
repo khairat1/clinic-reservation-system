@@ -1,28 +1,46 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block title %}{{ department.name }} — MediClinic{% endblock %}
+
 {% block content %}
 
-<section class="section">
-    <div class="department-header">
-        <img src="{% static department.image %}" alt="{{ department.name }}">
-        <h2>{{ department.name }}</h2>
-        <p>{{ department.description }}</p>
-    </div>
+<!-- Department Header -->
+<div class="page-header">
+    <a href="{% url 'clinic:departments_list' %}" style="color: #0D47A1; text-decoration: none; font-size: 14px;">
+        ← Back to Departments
+    </a>
+    <h1 style="margin-top: 10px;">{{ department.name }}</h1>
+    <p>{{ department.description }}</p>
+</div>
 
-    <h3>Doctors in this Department</h3>
-    <div class="cards-grid">
-        {% for doctor in doctors %}
-        <div class="card">
-            <img src="{% static doctor.image %}" alt="{{ doctor.name }}">
+<!-- Department Image -->
+<div style="margin-bottom: 35px;">
+    <img src="/static/images/{{ department.image }}" 
+         alt="{{ department.name }}"
+         style="width: 100%; max-width: 500px; border-radius: 12px; display: block;">
+</div>
+
+<!-- Doctors in this Department -->
+<h2 class="section-title">Our {{ department.name }} Doctors</h2>
+
+<div class="cards-grid">
+    {% for doctor in doctors %}
+    <div class="card">
+        <img src="/static/images/{{ doctor.image }}" 
+             alt="{{ doctor.name }}"
+             class="card-image">
+        <div class="card-body">
             <h3>{{ doctor.name }}</h3>
             <p>{{ doctor.description|truncatewords:20 }}</p>
-<a href="#">Book Appointment</a>
         </div>
-        {% empty %}
-        <p>No doctors available in this department yet.</p>
-        {% endfor %}
+        <div class="card-footer">
+            <a href="{% url 'booking_step3' %}?doctor_id={{ doctor.pk }}" class="btn btn-blue">Book Appointment</a>
+        </div>
     </div>
-</section>
+    {% empty %}
+    <p style="color: #666;">No doctors available in this department yet.</p>
+    {% endfor %}
+</div>
 
 {% endblock %}

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}My Appointments — MediClinic{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1>My Appointments</h1>
+    <p>View and manage your upcoming appointments</p>
+</div>
+
+<div style="margin-bottom: 20px;">
+    <a href="{% url 'booking_step1' %}" class="btn btn-blue">+ Book New Appointment</a>
+</div>
+
+{% if appointments %}
+<div style="background: white; border-radius: 12px; box-shadow: 0 2px 15px rgba(0,0,0,0.08); overflow: hidden;">
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr style="background: #0D47A1; color: white;">
+                <th style="padding: 15px 20px; text-align: left;">Doctor</th>
+                <th style="padding: 15px 20px; text-align: left;">Department</th>
+                <th style="padding: 15px 20px; text-align: left;">Date</th>
+                <th style="padding: 15px 20px; text-align: left;">Time</th>
+                <th style="padding: 15px 20px; text-align: left;">Status</th>
+                <th style="padding: 15px 20px; text-align: left;">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appointment in appointments %}
+            <tr style="border-bottom: 1px solid #f0f4f8;">
+                <td style="padding: 15px 20px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <img src="/static/images/{{ appointment.doctor.image }}"
+                             alt="{{ appointment.doctor.name }}"
+                             style="width: 40px; height: 40px; border-radius: 50%;">
+                        <span style="font-weight: 600; color: #1a1a2e;">{{ appointment.doctor.name }}</span>
+                    </div>
+                </td>
+                <td style="padding: 15px 20px; color: #666;">{{ appointment.doctor.department.name }}</td>
+                <td style="padding: 15px 20px; color: #666;">{{ appointment.date }}</td>
+                <td style="padding: 15px 20px; color: #666;">{{ appointment.time }}</td>
+                <td style="padding: 15px 20px;">
+                    {% if appointment.status == 'confirmed' %}
+                        <span style="background: #d4edda; color: #155724; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 600;">✓ Confirmed</span>
+                    {% elif appointment.status == 'cancelled' %}
+                        <span style="background: #f8d7da; color: #721c24; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 600;">✗ Cancelled</span>
+                    {% else %}
+                        <span style="background: #d1ecf1; color: #0c5460; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 600;">Completed</span>
+                    {% endif %}
+                </td>
+                <td style="padding: 15px 20px;">
+                    {% if appointment.status == 'confirmed' %}
+                    <a href="{% url 'cancel_appointment' appointment.pk %}" 
+                       onclick="return confirm('Are you sure you want to cancel this appointment?')"
+                       style="color: #dc3545; font-size: 14px; font-weight: 600; text-decoration: none;">
+                        Cancel
+                    </a>
+                    {% else %}
+                        <span style="color: #999; font-size: 14px;">—</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% else %}
+<div style="background: white; border-radius: 12px; padding: 60px; text-align: center; box-shadow: 0 2px 15px rgba(0,0,0,0.08);">
+    <p style="color: #666; font-size: 18px; margin-bottom: 20px;">You have no appointments yet.</p>
+    <a href="{% url 'booking_step1' %}" class="btn btn-blue">Book Your First Appointment</a>
+</div>
+{% endif %}
+
+{% endblock %}

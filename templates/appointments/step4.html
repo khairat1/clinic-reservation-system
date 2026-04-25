@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Book Appointment — Step 4{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1>Book an Appointment</h1>
+    <p>Step 4 of 4 — Choose a Time</p>
+</div>
+
+<!-- Progress Bar -->
+<div style="display: flex; gap: 10px; margin-bottom: 35px;">
+    <div style="flex: 1; height: 6px; background: #0D47A1; border-radius: 3px;"></div>
+    <div style="flex: 1; height: 6px; background: #0D47A1; border-radius: 3px;"></div>
+    <div style="flex: 1; height: 6px; background: #0D47A1; border-radius: 3px;"></div>
+    <div style="flex: 1; height: 6px; background: #0D47A1; border-radius: 3px;"></div>
+</div>
+
+<!-- Doctor and Date Info -->
+<div style="background: white; border-radius: 12px; padding: 20px; margin-bottom: 30px; box-shadow: 0 2px 15px rgba(0,0,0,0.08);">
+    <h3 style="color: #0D47A1; margin-bottom: 5px;">{{ doctor.name }}</h3>
+    <p style="color: #666;">Date: <strong>{{ selected_date }}</strong></p>
+</div>
+
+<!-- Time Slots -->
+<h2 class="section-title">Available Time Slots</h2>
+
+{% if available_slots %}
+<form method="POST" action="{% url 'booking_step5' %}">
+    {% csrf_token %}
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; margin-bottom: 30px;">
+    {% for slot in all_slots %}
+        {% if slot.booked %}
+        <div class="time-slot-booked">{{ slot.time|time:"H:i" }} — Booked</div>
+        {% else %}
+        <label style="cursor: pointer;">
+            <input type="radio" name="time" value="{{ slot.time|time:'H:i:s' }}" style="display: none;" required>
+            <div class="time-slot">{{ slot.time|time:"H:i" }}</div>
+        </label>
+        {% endif %}
+    {% endfor %}
+</div>
+    <button type="submit" class="btn btn-blue" style="padding: 14px 40px; font-size: 16px;">
+        Confirm Appointment →
+    </button>
+</form>
+{% else %}
+<div style="background: white; border-radius: 12px; padding: 40px; text-align: center; box-shadow: 0 2px 15px rgba(0,0,0,0.08);">
+    <p style="color: #666; font-size: 16px; margin-bottom: 20px;">No available slots for this date. Please try another date.</p>
+    <a href="{% url 'booking_step3' %}?doctor_id={{ doctor.pk }}" class="btn btn-blue">← Choose Another Date</a>
+</div>
+{% endif %}
+
+{% endblock %}

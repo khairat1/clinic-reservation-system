@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Book Appointment — Step 2{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1>Book an Appointment</h1>
+    <p>Step 2 of 4 — Choose a Doctor</p>
+</div>
+
+<!-- Progress Bar -->
+<div style="display: flex; gap: 10px; margin-bottom: 35px;">
+    <div style="flex: 1; height: 6px; background: #0D47A1; border-radius: 3px;"></div>
+    <div style="flex: 1; height: 6px; background: #0D47A1; border-radius: 3px;"></div>
+    <div style="flex: 1; height: 6px; background: #e0e0e0; border-radius: 3px;"></div>
+    <div style="flex: 1; height: 6px; background: #e0e0e0; border-radius: 3px;"></div>
+</div>
+
+<h2 class="section-title">Doctors in {{ department.name }}</h2>
+
+<div class="cards-grid">
+    {% for doctor in doctors %}
+    <a href="{% url 'booking_step3' %}?doctor_id={{ doctor.pk }}"
+       style="text-decoration: none;">
+        <div class="card" style="cursor: pointer;">
+            <img src="/static/images/{{ doctor.image }}"
+                 alt="{{ doctor.name }}"
+                 class="card-image">
+            <div class="card-body">
+                <h3>{{ doctor.name }}</h3>
+                <p>{{ doctor.description|truncatewords:20 }}</p>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+
+<div style="margin-top: 20px;">
+    <a href="{% url 'booking_step1' %}" style="color: #0D47A1;">← Back to Departments</a>
+</div>
+
+{% endblock %}

@@ -76,25 +76,30 @@ def booking_step4(request):
     day_name = selected_date.strftime('%A')
     schedules = Schedule.objects.filter(doctor=doctor, day=day_name)
 
-    booked_times = Appointment.objects.filter(
+    booked_times = list(Appointment.objects.filter(
         doctor=doctor,
         date=selected_date
-    ).values_list('time', flat=True)
+    ).values_list('time', flat=True))
 
-    available_slots = []
+    all_slots = []
     for schedule in schedules:
         from datetime import datetime, timedelta
         current = datetime.combine(selected_date, schedule.start_time)
         end     = datetime.combine(selected_date, schedule.end_time)
         while current < end:
             slot_time = current.time()
-            if slot_time not in booked_times:
-                available_slots.append(slot_time)
+            all_slots.append({
+                'time': slot_time,
+                'booked': slot_time in booked_times
+            })
             current += timedelta(minutes=30)
+
+    available_slots = [s['time'] for s in all_slots if not s['booked']]
 
     return render(request, 'appointments/step4.html', {
         'doctor': doctor,
         'selected_date': selected_date,
+        'all_slots': all_slots,
         'available_slots': available_slots,
     })
 

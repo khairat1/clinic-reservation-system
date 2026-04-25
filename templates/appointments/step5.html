@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Appointment Confirmed — MediClinic{% endblock %}
+
+{% block content %}
+
+<div style="max-width: 600px; margin: 0 auto; text-align: center;">
+    
+    <!-- Success Icon -->
+    <div style="width: 80px; height: 80px; background: #d4edda; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px auto;">
+        <span style="font-size: 40px;">✓</span>
+    </div>
+
+    <h1 style="color: #0D47A1; margin-bottom: 10px;">Appointment Confirmed!</h1>
+    <p style="color: #666; margin-bottom: 35px;">Your appointment has been successfully booked.</p>
+
+    <!-- Appointment Details -->
+    <div style="background: white; border-radius: 12px; padding: 30px; box-shadow: 0 2px 15px rgba(0,0,0,0.08); text-align: left; margin-bottom: 30px;">
+        <h2 style="color: #0D47A1; margin-bottom: 20px; font-size: 20px;">Appointment Details</h2>
+        
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+            <div style="display: flex; justify-content: space-between; padding-bottom: 15px; border-bottom: 1px solid #f0f4f8;">
+                <span style="color: #666; font-weight: 500;">Doctor</span>
+                <span style="color: #1a1a2e; font-weight: 600;">{{ appointment.doctor.name }}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding-bottom: 15px; border-bottom: 1px solid #f0f4f8;">
+                <span style="color: #666; font-weight: 500;">Department</span>
+                <span style="color: #1a1a2e; font-weight: 600;">{{ appointment.doctor.department.name }}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding-bottom: 15px; border-bottom: 1px solid #f0f4f8;">
+                <span style="color: #666; font-weight: 500;">Date</span>
+                <span style="color: #1a1a2e; font-weight: 600;">{{ appointment.date }}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding-bottom: 15px; border-bottom: 1px solid #f0f4f8;">
+                <span style="color: #666; font-weight: 500;">Time</span>
+                <span style="color: #1a1a2e; font-weight: 600;">{{ appointment.time }}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                <span style="color: #666; font-weight: 500;">Status</span>
+                <span style="color: #28a745; font-weight: 600;">✓ Confirmed</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div style="display: flex; gap: 15px; justify-content: center;">
+        <a href="{% url 'my_appointments' %}" class="btn btn-blue">View My Appointments</a>
+        <a href="{% url 'booking_step1' %}" class="btn btn-outline" style="color: #0D47A1; border: 2px solid #0D47A1;">Book Another</a>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Book Appointment — Step 3{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1>Book an Appointment</h1>
+    <p>Step 3 of 4 — Choose a Date</p>
+</div>
+
+<!-- Progress Bar -->
+<div style="display: flex; gap: 10px; margin-bottom: 35px;">
+    <div style="flex: 1; height: 6px; background: #0D47A1; border-radius: 3px;"></div>
+    <div style="flex: 1; height: 6px; background: #0D47A1; border-radius: 3px;"></div>
+    <div style="flex: 1; height: 6px; background: #0D47A1; border-radius: 3px;"></div>
+    <div style="flex: 1; height: 6px; background: #e0e0e0; border-radius: 3px;"></div>
+</div>
+
+<!-- Doctor Info -->
+<div style="background: white; border-radius: 12px; padding: 20px; margin-bottom: 30px; box-shadow: 0 2px 15px rgba(0,0,0,0.08); display: flex; align-items: center; gap: 20px;">
+    <img src="/static/images/{{ doctor.image }}" 
+         alt="{{ doctor.name }}"
+         style="width: 80px; height: 80px; border-radius: 50%;">
+    <div>
+        <h3 style="color: #0D47A1; margin-bottom: 5px;">{{ doctor.name }}</h3>
+        <p style="color: #666; font-size: 14px;">{{ doctor.description|truncatewords:15 }}</p>
+    </div>
+</div>
+
+<!-- Date Form -->
+<div class="form-container">
+    <h2>Select a Date</h2>
+    <form method="POST" action="{% url 'booking_step4' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_date">Appointment Date</label>
+            {{ form.date }}
+            {% if form.date.errors %}
+                <p style="color: red; font-size: 13px; margin-top: 5px;">{{ form.date.errors.0 }}</p>
+            {% endif %}
+        </div>
+        <button type="submit" class="form-submit">See Available Times →</button>
+    </form>
+</div>
+
+<div style="margin-top: 20px;">
+    <a href="{% url 'booking_step2' %}?department_id={{ doctor.department.pk }}" style="color: #0D47A1;">← Back to Doctors</a>
+</div>
+
+{% endblock %}

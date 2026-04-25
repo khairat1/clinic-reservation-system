@@ -9,6 +9,7 @@ class ChatHistory(models.Model):
     )
     message = models.TextField()
     response = models.TextField()
+    department = models.CharField(max_length=100, blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

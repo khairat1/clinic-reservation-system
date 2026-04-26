@@ -138,6 +138,14 @@ def booking_step5(request):
         # Use create() instead of update_or_create() to prevent overwriting
         # another patient's appointment. IntegrityError is caught for race conditions.
         try:
+            # Delete any cancelled appointment for this slot first
+            Appointment.objects.filter(
+                doctor=doctor,
+                date=date_str,
+                time=time_str,
+                status='cancelled',
+            ).delete()
+            
             appointment = Appointment.objects.create(
                 doctor=doctor,
                 date=date_str,

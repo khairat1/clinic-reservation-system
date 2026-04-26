@@ -8,7 +8,7 @@ urlpatterns = [
     
     # Maymouna — clinic app (home, departments, doctors, public pages)
     path('', include('clinic.urls')),
-    path('clinic/', include('clinic.urls')),
+    
 
     # Khairat — accounts app (register, login, logout)
     path('accounts/', include('accounts.urls')),

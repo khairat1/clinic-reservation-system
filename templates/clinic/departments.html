@@ -5,13 +5,33 @@
 
 <section class="section">
     <h2>Our Departments</h2>
+
     <div class="cards-grid">
         {% for department in departments %}
         <div class="card">
-            <img src="/static/images/{{ department.image }}" alt="{{ department.name }}">
-            <h3>{{ department.name }}</h3>
-            <p>{{ department.description|truncatewords:20 }}</p>
-            <a href="{% url 'clinic:department_detail' department.pk %}">View Department</a>
+
+            <!-- Image -->
+            <img src="/static/images/{{ department.image }}" 
+                 alt="{{ department.name }}" 
+                 class="card-image">
+
+            <!-- Body -->
+            <div class="card-body">
+                <h3>{{ department.name }}</h3>
+                <p>{{ department.description|truncatewords:20 }}</p>
+            </div>
+
+            <!-- Footer (same style as doctors) -->
+            <div class="card-footer" style="display: flex; gap: 10px;">
+                
+                <a href="{% url 'clinic:department_detail' department.pk %}" 
+                   class="btn btn-blue"
+                   style="width:100%;">
+                    View Department
+                </a>
+
+            </div>
+
         </div>
         {% endfor %}
     </div>

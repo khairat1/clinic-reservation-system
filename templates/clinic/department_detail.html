@@ -27,16 +27,33 @@
 <div class="cards-grid">
     {% for doctor in doctors %}
     <div class="card">
+        
         <img src="/static/images/{{ doctor.image }}" 
              alt="{{ doctor.name }}"
              class="card-image">
+
         <div class="card-body">
             <h3>{{ doctor.name }}</h3>
             <p>{{ doctor.description|truncatewords:20 }}</p>
         </div>
-        <div class="card-footer">
-            <a href="{% url 'booking_step3' %}?doctor_id={{ doctor.pk }}" class="btn btn-blue">Book Appointment</a>
+
+        <!-- FIXED BUTTON AREA -->
+        <div class="card-footer" style="display: flex; gap: 10px;">
+            
+            <a href="{% url 'clinic:doctor_detail' doctor.pk %}" 
+               class="btn"
+               style="flex:1; background:#EAF2FF; color:#0D47A1; border:1px solid #BFD7FF;">
+                Read More
+            </a>
+
+            <a href="{% url 'booking_step3' %}?doctor_id={{ doctor.pk }}" 
+               class="btn btn-blue"
+               style="flex:1;">
+                Book Appointment
+            </a>
+
         </div>
+
     </div>
     {% empty %}
     <p style="color: #666;">No doctors available in this department yet.</p>

@@ -18,3 +18,86 @@ to the right department based on their symptoms.
 ## Architecture Link
 
 [View Architecture Documentation](https://github.com/khairat1/clinic-reservation-system/blob/main/ARCHITECTURE.md)
+
+## Prerequisites
+
+- Python 3.10+
+- PostgreSQL
+- Git
+
+## Setup Instructions
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/khairat1/clinic-reservation-system.git
+cd clinic-reservation-system
+```
+
+### 2. Create and Activate Virtual Environment
+```bash
+# Windows
+python -m venv venv
+venv\Scripts\activate
+
+# Mac/Linux
+python -m venv venv
+source venv/bin/activate
+```
+
+### 3. Install Dependencies
+```bash
+python -m pip install -r requirements.txt
+```
+
+### 4. Configure PostgreSQL
+Create a database named `clinic_db` with:
+- User: `postgres`
+- Password: `qwerty`
+- Host: `localhost`
+- Port: `5432`
+
+### 5. Run Migrations
+```bash
+python manage.py migrate
+```
+
+### 6. Load Initial Data
+```bash
+python manage.py loaddata clinic/fixtures/clinic_data.json
+python manage.py loaddata clinic/fixtures/schedules_data.json
+```
+
+### 7. Generate Doctor and Department Icons
+```bash
+python generate_icons.py
+```
+
+### 8. Run the Server
+```bash
+python manage.py runserver
+```
+
+### 9. Access the Website
+Open your browser and go to: http://127.0.0.1:8000
+
+## Test Accounts
+
+| Role | Username | Password |
+|------|----------|----------|
+| Admin | 230513449 | admin |
+
+> To create your own admin account:
+> ```bash
+> python manage.py createsuperuser
+> ```
+
+## Key Pages
+
+| Page | URL |
+|------|-----|
+| Home | http://127.0.0.1:8000/ |
+| Departments | http://127.0.0.1:8000/departments/ |
+| Doctors | http://127.0.0.1:8000/doctors/ |
+| Book Appointment | http://127.0.0.1:8000/appointments/book/step1/ |
+| Chatbot | http://127.0.0.1:8000/chatbot/ |
+| Admin Panel | http://127.0.0.1:8000/admin/ |

@@ -9,7 +9,6 @@ def get_department_recommendation(symptom_text, chat_history=None):
     try:
         departments = Department.objects.all()
         if not departments.exists():
-            # Fallback if no departments are in the DB yet
             dept_list = "General Medicine, Cardiology, Neurology, Pediatrics"
         else:
             dept_names = [d.name for d in departments]
@@ -83,6 +82,8 @@ REASON: <one short specific sentence explaining why>
         }
 
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         print(f"Chatbot error: {e}")
         return {
             'found': False,
@@ -95,17 +96,13 @@ def handle_quick_action(action, department_name):
     from clinic.models import Doctor, Department
 
     action = action.lower().strip()
-    
-    # ─── AUTO-RECOVERY OF DEPARTMENT ───
-    # If the user asks for a doctor/department but we only have a partial name
+
     target_dept = None
     if department_name:
         target_dept = Department.objects.filter(name__iexact=department_name).first()
         if not target_dept:
-            # Try fuzzy match if exact fails
             target_dept = Department.objects.filter(name__icontains=department_name).first()
 
-    # 1. FIND DOCTOR LOGIC
     if 'find doctor' in action or 'doctor' in action:
         if target_dept:
             doctors = Doctor.objects.filter(department=target_dept)
@@ -125,7 +122,6 @@ def handle_quick_action(action, department_name):
             'department': None,
         }
 
-    # 2. BOOKING LOGIC
     if 'book' in action or 'appointment' in action:
         if target_dept:
             doctors = Doctor.objects.filter(department=target_dept)
@@ -134,7 +130,6 @@ def handle_quick_action(action, department_name):
                 names_html = ', '.join(links)
             else:
                 names_html = 'our specialists'
-                
             return {
                 'found': True,
                 'message': f'To book an appointment in the {target_dept.name} department, you can choose from these doctors: {names_html}. You can click "Book Appointment" in the sidebar when you are ready to proceed.',
@@ -146,7 +141,6 @@ def handle_quick_action(action, department_name):
             'department': None,
         }
 
-    # 3. DEPARTMENT INFO LOGIC
     if 'department' in action:
         if target_dept:
             description_snippet = (target_dept.description or '')[:120]
@@ -161,7 +155,6 @@ def handle_quick_action(action, department_name):
             'department': None,
         }
 
-    # 4. CONTACT LOGIC
     if 'contact' in action:
         return {
             'found': True,

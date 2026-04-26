@@ -9,6 +9,7 @@ urlpatterns = [
     path('departments/', views.departments_list, name='departments_list'),
     path('departments/<int:pk>/', views.department_detail, name='department_detail'),
     path('doctors/', views.doctors_list, name='doctors_list'),
+    path('doctors/<int:pk>/', views.doctor_detail, name='doctor_detail'),
 
     # Admin management pages
     path('admin-dashboard/', views.admin_dashboard, name='admin_dashboard'),

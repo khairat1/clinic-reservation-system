@@ -1,7 +1,9 @@
 from django.urls import path
+from django.views.generic import RedirectView
 from . import views
 
 urlpatterns = [
+    path('', RedirectView.as_view(url='book/step1/', permanent=False)),
     path('book/step1/', views.booking_step1, name='booking_step1'),
     path('book/step2/', views.booking_step2, name='booking_step2'),
     path('book/step3/', views.booking_step3, name='booking_step3'),

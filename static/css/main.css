@@ -460,6 +460,20 @@ input[type="radio"]:checked + .time-slot {
     right: 26px;
     bottom: 26px;
     z-index: 9999;
+    pointer-events: none; /* Allow clicks to pass through invisible areas */
+}
+
+.mc-launcher,
+.mc-hint {
+    pointer-events: auto; /* Always interactive */
+}
+
+.mc-window {
+    pointer-events: none; /* Block clicks when hidden */
+}
+
+.mc-window.active {
+    pointer-events: auto; /* Enable clicks only when open */
 }
 
 .mc-hint {

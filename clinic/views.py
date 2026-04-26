@@ -30,9 +30,16 @@ def department_detail(request, pk):
 
 
 def doctors_list(request):
-    doctors = Doctor.objects.all()
+    doctors = Doctor.objects.all().order_by('name')
     return render(request, 'clinic/doctors_list.html', {
         'doctors': doctors,
+    })
+
+
+def doctor_detail(request, pk):
+    doctor = get_object_or_404(Doctor, pk=pk)
+    return render(request, 'clinic/doctor_detail.html', {
+        'doctor': doctor,
     })
 
 

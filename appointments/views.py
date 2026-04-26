@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.db import IntegrityError
 from clinic.models import Department, Doctor, Schedule
 from .models import Appointment
 from .forms import AppointmentDateForm
@@ -65,7 +66,11 @@ def booking_step4(request):
         else:
             return redirect('booking_step3')
     else:
-        return redirect('booking_step3')
+        # On GET (e.g. browser back), preserve doctor context in redirect
+        doctor_id = request.session.get('doctor_id')
+        if doctor_id:
+            return redirect(f'/appointments/book/step3/?doctor_id={doctor_id}')
+        return redirect('booking_step1')
 
     doctor_id = request.session.get('doctor_id')
     if not doctor_id:
@@ -119,9 +124,10 @@ def booking_step5(request):
 
         doctor = get_object_or_404(Doctor, pk=doctor_id)
 
+        # Double-check slot availability before attempting to create
         already_booked = Appointment.objects.filter(
             doctor=doctor,
-             date=date_str,
+            date=date_str,
             time=time_str,
             status='confirmed',
         ).exists()
@@ -129,15 +135,19 @@ def booking_step5(request):
             messages.error(request, 'Sorry, this slot was just taken. Please choose another time.')
             return redirect('booking_step4')
 
-        appointment, created = Appointment.objects.update_or_create(
-            doctor=doctor,
-            date=date_str,
-         time=time_str,
-         defaults={
-        'patient': request.user,
-        'status': 'confirmed',
-    }
-)
+        # Use create() instead of update_or_create() to prevent overwriting
+        # another patient's appointment. IntegrityError is caught for race conditions.
+        try:
+            appointment = Appointment.objects.create(
+                doctor=doctor,
+                date=date_str,
+                time=time_str,
+                patient=request.user,
+                status='confirmed',
+            )
+        except IntegrityError:
+            messages.error(request, 'Sorry, this slot was just taken by someone else. Please choose another time.')
+            return redirect('booking_step4')
 
         request.session.pop('doctor_id', None)
         request.session.pop('department_id', None)

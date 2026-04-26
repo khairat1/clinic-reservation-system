@@ -7,6 +7,7 @@ class ChatHistory(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
     )
+    session_id = models.CharField(max_length=100, blank=True, null=True, db_index=True)
     message = models.TextField()
     response = models.TextField()
     department = models.CharField(max_length=100, blank=True, null=True)

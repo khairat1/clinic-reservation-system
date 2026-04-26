@@ -70,6 +70,7 @@
                     <button data-message="Help me find a doctor">👨‍⚕️ Find Doctor</button>
                     <button data-message="Show me the departments">🏥 Departments</button>
                     <button data-message="How can I contact the clinic?">📞 Contact Clinic</button>
+                    <button id="mcResetAction" style="grid-column: span 2; min-height: 50px;">🔄 New Conversation</button>
                 </div>
                 <div class="mc-typing" id="mcTyping">
                     <span></span><span></span><span></span>
@@ -82,6 +83,6 @@
         </div>
     </div>
     {% endif %}
-    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/main.js' %}?v=5"></script>
 </body>
 </html>

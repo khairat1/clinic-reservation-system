@@ -32,7 +32,7 @@ GROQ_API_KEY = os.environ.get('GROQ_API_KEY', '')
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-5t9$w29h&3^qk6ejoip54ga48x=(gc8!0#se4__98q@1vy$8_^'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-default-fallback-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -141,3 +141,7 @@ AUTH_USER_MODEL = 'accounts.User'
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'
+
+# Media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

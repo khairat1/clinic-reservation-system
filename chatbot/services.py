@@ -1,14 +1,19 @@
 from clinic.models import Department
+from django.conf import settings
 from groq import Groq
 
-GROQ_API_KEY = "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"
+GROQ_API_KEY = getattr(settings, 'GROQ_API_KEY', '')
 
 
 def get_department_recommendation(symptom_text, chat_history=None):
     try:
         departments = Department.objects.all()
-        dept_names = [d.name for d in departments]
-        dept_list = ', '.join(dept_names)
+        if not departments.exists():
+            # Fallback if no departments are in the DB yet
+            dept_list = "General Medicine, Cardiology, Neurology, Pediatrics"
+        else:
+            dept_names = [d.name for d in departments]
+            dept_list = ', '.join(dept_names)
 
         messages = [
             {
@@ -87,71 +92,80 @@ REASON: <one short specific sentence explaining why>
 
 
 def handle_quick_action(action, department_name):
-    from clinic.models import Doctor
+    from clinic.models import Doctor, Department
 
     action = action.lower().strip()
+    
+    # ─── AUTO-RECOVERY OF DEPARTMENT ───
+    # If the user asks for a doctor/department but we only have a partial name
+    target_dept = None
+    if department_name:
+        target_dept = Department.objects.filter(name__iexact=department_name).first()
+        if not target_dept:
+            # Try fuzzy match if exact fails
+            target_dept = Department.objects.filter(name__icontains=department_name).first()
 
+    # 1. FIND DOCTOR LOGIC
     if 'find doctor' in action or 'doctor' in action:
-        if department_name:
-            try:
-                doctors = Doctor.objects.filter(department__name__iexact=department_name)
-                if doctors.exists():
-                    names = ', '.join([d.name for d in doctors])
-                    return {
-                        'found': True,
-                        'message': f'Here are the doctors available in the {department_name} department: {names}. You can book an appointment with any of them.',
-                        'department': department_name,
-                    }
-            except:
-                pass
-        return {
-            'found': False,
-            'message': 'Please describe your symptoms first so I can find the right doctor for you.',
-            'department': None,
-        }
-
-    if 'book' in action or 'appointment' in action:
-        if department_name:
-            try:
-                doctors = Doctor.objects.filter(department__name__iexact=department_name)
-                if doctors.exists():
-                    names = ', '.join([d.name for d in doctors])
-                    return {
-                        'found': True,
-                        'message': f'To book an appointment in the {department_name} department, you can choose from these doctors: {names}. Click "Book Appointment" in the sidebar to proceed.',
-                        'department': department_name,
-                        'redirect': '/appointments/',
-                    }
-            except:
-                pass
-        return {
-            'found': False,
-            'message': 'Please describe your symptoms first so I can recommend the right department before booking.',
-            'department': None,
-        }
-
-    if 'department' in action:
-        if department_name:
-            try:
-                department = Department.objects.get(name__iexact=department_name)
+        if target_dept:
+            doctors = Doctor.objects.filter(department=target_dept)
+            if doctors.exists():
+                links = []
+                for d in doctors:
+                    links.append(f'<a href="/doctors/{d.id}/" style="color: #0b50c4; font-weight: bold; text-decoration: underline;">{d.name}</a>')
+                names_html = ', '.join(links)
                 return {
                     'found': True,
-                    'message': f'You were referred to the {department.name} department. {department.description[:100]}... Click "Departments" in the sidebar to learn more.',
-                    'department': department_name,
-                    'redirect': '/clinic/departments/',
+                    'message': f'Here are the specialists in our {target_dept.name} department: {names_html}. They are ready to help you.',
+                    'department': target_dept.name,
                 }
-            except:
-                pass
         return {
             'found': False,
-            'message': 'Please describe your symptoms first so I can direct you to the right department.',
+            'message': 'Please describe your symptoms first so I can find the most relevant doctor for you.',
             'department': None,
         }
 
+    # 2. BOOKING LOGIC
+    if 'book' in action or 'appointment' in action:
+        if target_dept:
+            doctors = Doctor.objects.filter(department=target_dept)
+            if doctors.exists():
+                links = [f'<a href="/doctors/{d.id}/" style="color: #0b50c4; font-weight: bold; text-decoration: underline;">{d.name}</a>' for d in doctors]
+                names_html = ', '.join(links)
+            else:
+                names_html = 'our specialists'
+                
+            return {
+                'found': True,
+                'message': f'To book an appointment in the {target_dept.name} department, you can choose from these doctors: {names_html}. You can click "Book Appointment" in the sidebar when you are ready to proceed.',
+                'department': target_dept.name,
+            }
+        return {
+            'found': False,
+            'message': 'Please describe your symptoms first so I can guide you to the correct department for booking.',
+            'department': None,
+        }
+
+    # 3. DEPARTMENT INFO LOGIC
+    if 'department' in action:
+        if target_dept:
+            description_snippet = (target_dept.description or '')[:120]
+            return {
+                'found': True,
+                'message': f'You were referred to the {target_dept.name} department. {description_snippet}... You can learn more by clicking "Departments" in the sidebar.',
+                'department': target_dept.name,
+            }
+        return {
+            'found': False,
+            'message': 'Tell me a bit about your symptoms, and I will show you the right department.',
+            'department': None,
+        }
+
+    # 4. CONTACT LOGIC
     if 'contact' in action:
         return {
             'found': True,
-            'message': 'You can reach MediClinic directly at: 📞 +90 212 555 0123. Our staff are available Monday to Friday, 8:00 AM to 6:00 PM.',
+            'message': 'You can reach MediClinic at: 📞 +90 212 555 0123. We are here to help!',
             'department': department_name,
         }
 

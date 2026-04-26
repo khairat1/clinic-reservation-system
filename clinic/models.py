@@ -15,6 +15,7 @@ class Doctor(models.Model):
     department  = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='doctors')
     description = models.TextField()
     image       = models.CharField(max_length=200, blank=True)
+    phone_number = models.CharField(max_length=20, blank=True, null=True)
 
     def __str__(self):
         return self.name

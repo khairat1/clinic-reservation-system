@@ -1,0 +1,602 @@
+[
+  {
+    "model": "clinic.schedule",
+    "pk": 1,
+    "fields": {
+      "doctor": 1,
+      "day": "Monday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 2,
+    "fields": {
+      "doctor": 1,
+      "day": "Tuesday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 3,
+    "fields": {
+      "doctor": 1,
+      "day": "Wednesday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 4,
+    "fields": {
+      "doctor": 1,
+      "day": "Thursday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 5,
+    "fields": {
+      "doctor": 1,
+      "day": "Friday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 6,
+    "fields": {
+      "doctor": 2,
+      "day": "Monday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 7,
+    "fields": {
+      "doctor": 2,
+      "day": "Tuesday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 8,
+    "fields": {
+      "doctor": 2,
+      "day": "Wednesday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 9,
+    "fields": {
+      "doctor": 2,
+      "day": "Thursday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 10,
+    "fields": {
+      "doctor": 2,
+      "day": "Friday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 11,
+    "fields": {
+      "doctor": 3,
+      "day": "Monday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 12,
+    "fields": {
+      "doctor": 3,
+      "day": "Tuesday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 13,
+    "fields": {
+      "doctor": 3,
+      "day": "Wednesday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 14,
+    "fields": {
+      "doctor": 3,
+      "day": "Thursday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 15,
+    "fields": {
+      "doctor": 3,
+      "day": "Friday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 16,
+    "fields": {
+      "doctor": 4,
+      "day": "Monday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 17,
+    "fields": {
+      "doctor": 4,
+      "day": "Tuesday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 18,
+    "fields": {
+      "doctor": 4,
+      "day": "Wednesday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 19,
+    "fields": {
+      "doctor": 4,
+      "day": "Thursday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 20,
+    "fields": {
+      "doctor": 4,
+      "day": "Friday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 21,
+    "fields": {
+      "doctor": 5,
+      "day": "Monday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 22,
+    "fields": {
+      "doctor": 5,
+      "day": "Tuesday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 23,
+    "fields": {
+      "doctor": 5,
+      "day": "Wednesday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 24,
+    "fields": {
+      "doctor": 5,
+      "day": "Thursday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 25,
+    "fields": {
+      "doctor": 5,
+      "day": "Friday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 26,
+    "fields": {
+      "doctor": 6,
+      "day": "Monday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 27,
+    "fields": {
+      "doctor": 6,
+      "day": "Tuesday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 28,
+    "fields": {
+      "doctor": 6,
+      "day": "Wednesday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 29,
+    "fields": {
+      "doctor": 6,
+      "day": "Thursday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 30,
+    "fields": {
+      "doctor": 6,
+      "day": "Friday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 31,
+    "fields": {
+      "doctor": 7,
+      "day": "Monday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 32,
+    "fields": {
+      "doctor": 7,
+      "day": "Tuesday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 33,
+    "fields": {
+      "doctor": 7,
+      "day": "Wednesday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 34,
+    "fields": {
+      "doctor": 7,
+      "day": "Thursday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 35,
+    "fields": {
+      "doctor": 7,
+      "day": "Friday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 36,
+    "fields": {
+      "doctor": 8,
+      "day": "Monday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 37,
+    "fields": {
+      "doctor": 8,
+      "day": "Tuesday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 38,
+    "fields": {
+      "doctor": 8,
+      "day": "Wednesday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 39,
+    "fields": {
+      "doctor": 8,
+      "day": "Thursday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 40,
+    "fields": {
+      "doctor": 8,
+      "day": "Friday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 41,
+    "fields": {
+      "doctor": 9,
+      "day": "Monday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 42,
+    "fields": {
+      "doctor": 9,
+      "day": "Tuesday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 43,
+    "fields": {
+      "doctor": 9,
+      "day": "Wednesday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 44,
+    "fields": {
+      "doctor": 9,
+      "day": "Thursday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 45,
+    "fields": {
+      "doctor": 9,
+      "day": "Friday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 46,
+    "fields": {
+      "doctor": 10,
+      "day": "Monday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 47,
+    "fields": {
+      "doctor": 10,
+      "day": "Tuesday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 48,
+    "fields": {
+      "doctor": 10,
+      "day": "Wednesday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 49,
+    "fields": {
+      "doctor": 10,
+      "day": "Thursday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 50,
+    "fields": {
+      "doctor": 10,
+      "day": "Friday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 51,
+    "fields": {
+      "doctor": 11,
+      "day": "Monday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 52,
+    "fields": {
+      "doctor": 11,
+      "day": "Tuesday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 53,
+    "fields": {
+      "doctor": 11,
+      "day": "Wednesday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 54,
+    "fields": {
+      "doctor": 11,
+      "day": "Thursday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 55,
+    "fields": {
+      "doctor": 11,
+      "day": "Friday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 56,
+    "fields": {
+      "doctor": 12,
+      "day": "Monday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 57,
+    "fields": {
+      "doctor": 12,
+      "day": "Tuesday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 58,
+    "fields": {
+      "doctor": 12,
+      "day": "Wednesday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 59,
+    "fields": {
+      "doctor": 12,
+      "day": "Thursday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  },
+  {
+    "model": "clinic.schedule",
+    "pk": 60,
+    "fields": {
+      "doctor": 12,
+      "day": "Friday",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00"
+    }
+  }
+]

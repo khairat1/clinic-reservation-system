@@ -43,8 +43,8 @@
                 {% endif %}
             </div>
 
-            <a href="{% url 'booking_step1' %}" class="btn-primary" style="display: block; width: 100%; padding: 16px; background: linear-gradient(135deg, #0b50c4, #146be8); color: white; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 16px; box-shadow: 0 8px 20px rgba(11, 80, 196, 0.25); transition: 0.3s;">
-                📅 Book Appointment
+            <a href="{% url 'booking_step3' %}?doctor_id={{ doctor.id }}" class="btn-primary" style="display: block; width: 100%; padding: 16px; background: linear-gradient(135deg, #0b50c4, #146be8); color: white; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 16px; box-shadow: 0 8px 20px rgba(11, 80, 196, 0.25); transition: 0.3s;">
+    📅 Book Appointment
             </a>
         </div>
 

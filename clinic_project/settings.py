@@ -26,7 +26,7 @@ if env_path.exists():
                 key, value = line.strip().split('=', 1)
                 os.environ[key.strip()] = value.strip().strip("'\"")
 
-GROQ_API_KEY = os.environ.get('GROQ_API_KEY', '')
+GROQ_API_KEY = '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'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/

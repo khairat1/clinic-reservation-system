@@ -784,4 +784,21 @@ input[type="radio"]:checked + .time-slot {
     .mc-actions { grid-template-columns: 1fr; }
     .mc-hint { display: none; }
 }
+/* ───  button of the new chat  ─────────────────────────────────────────────────────── */
+#mcNewChat {
+    background: transparent !important;
+    border: 1.5px solid rgba(255,255,255,0.7) !important;
+    color: white !important;
+    border-radius: 20px !important;
+    padding: 5px 14px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    box-shadow: none !important;
+    transform: none !important;
+    margin: 0 8px !important;
+    letter-spacing: 0.3px !important;
+}
 
+#mcNewChat:hover {
+    background: rgba(255,255,255,0.15) !important;
+}

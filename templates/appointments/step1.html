@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Book Appointment — Step 1{% endblock %}
 
@@ -19,15 +20,15 @@
 
 <h2 class="section-title">Select a Department</h2>
 
-<div class="cards-grid">
+<div class="cards-grid" style="align-items: stretch;">
     {% for department in departments %}
     <a href="{% url 'booking_step2' %}?department_id={{ department.pk }}"
-       style="text-decoration: none;">
-        <div class="card" style="cursor: pointer;">
-            <img src="/static/images/{{ department.image }}" 
+       style="text-decoration: none; display: flex;">
+        <div class="card" style="cursor: pointer; display: flex; flex-direction: column; width: 100%;">
+            <img src="{% static 'images/' %}{{ department.image }}"
                  alt="{{ department.name }}"
                  class="card-image">
-            <div class="card-body">
+            <div class="card-body" style="flex: 1;">
                 <h3>{{ department.name }}</h3>
                 <p>{{ department.description|truncatewords:15 }}</p>
             </div>

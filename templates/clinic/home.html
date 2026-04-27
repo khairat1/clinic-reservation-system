@@ -58,8 +58,9 @@
 </section>
 
 <!-- Quick Stats -->
-<section style="background: white; padding: 50px 40px;">
-<div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; text-align: center;">        <div style="padding: 30px; border-radius: 16px; background: #f0f4f8; border-top: 4px solid #0D47A1;">
+<section style="padding: 50px 40px;">
+<div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; text-align: center;">  
+          <div style="padding: 30px; border-radius: 16px; background: #f0f4f8; border-top: 4px solid #0D47A1;">
             <div style="font-size: 42px; font-weight: 700; color: #0D47A1;">4</div>
             <div style="color: #666; margin-top: 6px;">Departments</div>
         </div>
@@ -80,32 +81,54 @@
 
 <script>
     let current = 0;
+    const track = document.getElementById('carouselTrack');
+    const dots = document.querySelectorAll('.carousel-dot');
 
-    function getSlides() { return document.querySelectorAll('.carousel-slide'); }
-    function getDots() { return document.querySelectorAll('.carousel-dot'); }
+    // Duplicate all slides at the end for infinite loop
+    window.addEventListener('load', () => {
+        const slides = document.querySelectorAll('.carousel-slide');
+        slides.forEach(slide => {
+            const clone = slide.cloneNode(true);
+            track.appendChild(clone);
+        });
+        updateCarousel(false);
+        setInterval(() => moveCarousel(), 3000);
+    });
 
-    function updateCarousel() {
-        const slides = getSlides();
+    function updateCarousel(animate = true) {
+        const slides = track.querySelectorAll('.carousel-slide');
         const slideWidth = slides[0].offsetWidth + 24;
-        document.getElementById('carouselTrack').style.transform = `translateX(-${current * slideWidth}px)`;
-        getDots().forEach((d, i) => d.style.background = i === current ? '#0D47A1' : '#ccc');
+        track.style.transition = animate ? 'transform 0.5s ease' : 'none';
+        track.style.transform = `translateX(-${current * slideWidth}px)`;
+        const total = dots.length;
+        dots.forEach((d, i) => d.style.background = i === (current % total) ? '#0D47A1' : '#ccc');
     }
 
-    function moveCarousel(dir) {
-        const max = getSlides().length - 2;
-        current = Math.max(0, Math.min(current + dir, max));
-        updateCarousel();
+    function moveCarousel() {
+        const total = dots.length;
+        current++;
+        updateCarousel(true);
+
+        // When we reach the cloned set, silently jump back
+        if (current >= total) {
+            setTimeout(() => {
+                current = 0;
+                updateCarousel(false);
+            }, 500);
+        }
     }
 
     function goToSlide(index) {
-        const max = getSlides().length - 2;
-        current = Math.max(0, Math.min(index, max));
-        updateCarousel();
+        current = index;
+        updateCarousel(true);
     }
 
-    window.addEventListener('load', () => {
-        updateCarousel();
-        setInterval(() => moveCarousel(1), 3000);
+    // Arrow buttons
+    document.querySelectorAll('[onclick="moveCarousel(1)"]').forEach(btn => {
+        btn.onclick = () => moveCarousel();
+    });
+    document.querySelectorAll('[onclick="moveCarousel(-1)"]').forEach(btn => {
+        btn.onclick = () => moveCarousel();
     });
 </script>
 

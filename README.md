@@ -1,5 +1,9 @@
 # Online Medical Clinic Reservation System
 
+## Project Demo
+
+▶️ [Watch the full demo on YouTube](https://youtu.be/N1vMcbLirtg?si=vb7RC1I_c84_ANqo)
+
 ## Team Details
 | Name | Student ID | GitHub Username |
 |------|------------|-----------------|

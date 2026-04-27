@@ -8,10 +8,10 @@
 
     <div class="cards-grid">
         {% for department in departments %}
-        <div class="card">
+       <div class="card" style="display: flex; flex-direction: column;">
 
             <!-- Image -->
-            <img src="/static/images/{{ department.image }}" 
+            <img src="{% static 'images/' %}{{ department.image }}"
                  alt="{{ department.name }}" 
                  class="card-image">
 
@@ -22,7 +22,7 @@
             </div>
 
             <!-- Footer (same style as doctors) -->
-            <div class="card-footer" style="display: flex; gap: 10px;">
+            <div class="card-footer" style="margin-top: auto; display: flex; gap: 10px;">
                 
                 <a href="{% url 'clinic:department_detail' department.pk %}" 
                    class="btn btn-blue"

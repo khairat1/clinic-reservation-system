@@ -8,9 +8,9 @@
 
     <div class="cards-grid">
         {% for doctor in doctors %}
-        <div class="card">
+        <div class="card" style="display: flex; flex-direction: column;">
             
-            <img src="/static/images/{{ doctor.image }}" 
+            <img src="{% static 'images/' %}{{ doctor.image }}"
                  alt="{{ doctor.name }}"
                  class="card-image">
 
@@ -19,7 +19,7 @@
                 <p>{{ doctor.description|truncatewords:20 }}</p>
             </div>
 
-            <div class="card-footer" style="display: flex; gap: 10px;">
+            <div class="card-footer" style="display: flex; gap: 10px; margin-top: auto;">
                 
                 <a href="{% url 'clinic:doctor_detail' doctor.pk %}" 
                    class="btn"

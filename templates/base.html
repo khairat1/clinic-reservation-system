@@ -24,9 +24,13 @@
                 <a href="{% url 'clinic:departments_list' %}">Departments</a>
                 <a href="{% url 'clinic:doctors_list' %}">Doctors</a>
                 {% if user.is_authenticated %}
-                    <a href="{% url 'booking_step1' %}">Book Appointment</a>
-                    <a href="{% url 'my_appointments' %}">My Appointments</a>
-                {% endif %}
+    {% if user.role == 'doctor' %}
+        <a href="{% url 'doctor_schedule' %}">My Schedule</a>
+    {% else %}
+        <a href="{% url 'booking_step1' %}">Book Appointment</a>
+        <a href="{% url 'my_appointments' %}">My Appointments</a>
+    {% endif %}
+{% endif %}
             </div>
 
             <!-- Auth Buttons -->

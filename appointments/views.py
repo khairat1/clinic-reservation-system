@@ -190,6 +190,8 @@ def cancel_appointment(request, appointment_id):
         pk=appointment_id,
         patient=request.user
     )
+    
+    
 
     if appointment.status == 'confirmed':
         appointment.status = 'cancelled'
@@ -199,3 +201,28 @@ def cancel_appointment(request, appointment_id):
         messages.error(request, 'This appointment cannot be cancelled.')
 
     return redirect('my_appointments')
+
+@login_required
+def doctor_schedule(request):
+    if request.user.role != 'doctor':
+        return redirect('clinic:home')
+    
+    try:
+        doctor = request.user.doctor_profile
+    except:
+        doctor = None
+
+    appointments = []
+    schedules = []
+    
+    if doctor:
+        appointments = Appointment.objects.filter(
+            doctor=doctor
+        ).order_by('date', 'time')
+        schedules = Schedule.objects.filter(doctor=doctor)
+
+    return render(request, 'appointments/doctor_schedule.html', {
+        'doctor': doctor,
+        'appointments': appointments,
+        'schedules': schedules,
+    })

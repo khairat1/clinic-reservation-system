@@ -4,77 +4,109 @@
 {% block content %}
 
 <!-- Hero Section -->
-<div class="hero">
-    <h1>Welcome to Our Medical Clinic</h1>
-    <p>Quality healthcare for you and your family</p>
-    <a href="{% url 'clinic:departments_list' %}" class="btn btn-primary">View Departments</a>
+<div class="hero" style="padding: 80px 50px; margin-bottom: 0; border-radius: 0;">
+    <h1 style="font-size: 48px;">Welcome to MediClinic</h1>
+    <p style="font-size: 20px; max-width: 600px;">Expert care across Cardiology, Neurology, Pediatrics and General Medicine — all in one place.</p>
+  
 </div>
 
-<!-- Departments Section -->
-<section class="section">
-    <h2>Our Departments</h2>
+<!-- Department Carousel -->
+<section style="background: #f0f4f8; padding: 60px 0;">
+    <h2 style="text-align: center; color: #0D47A1; font-size: 32px; font-weight: 700; margin-bottom: 40px;">Our Departments</h2>
 
-    <div class="cards-grid">
+   <div class="carousel-wrapper" style="position: relative; max-width: 1200px; margin: 0 auto; padding: 0 60px;">
+
+        <!-- Left Arrow -->
+        <button onclick="moveCarousel(-1)" style="position: absolute; left: 0; top: 50%; transform: translateY(-50%); z-index: 10; width: 48px; height: 48px; border-radius: 50%; background: #0D47A1; color: white; border: none; font-size: 22px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">&#8249;</button>
+
+        <!-- Slides Track -->
+        <div style="overflow: hidden; border-radius: 16px;">
+        <div id="carouselTrack" style="display: flex; transition: transform 0.5s ease; gap: 24px;">
+            {% for department in departments %}
+            <div class="carousel-slide" style="min-width: calc(50% - 12px); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.12); cursor: pointer; position: relative;" onclick="window.location='{% url 'clinic:department_detail' department.pk %}'">
+
+                <!-- Department Banner Image -->
+                <img src="{% static 'images/' %}{{ department.image }}"
+                     alt="{{ department.name }}"
+                     style="width: 100%; height: 220px; display: block; object-fit: fill;">
+
+                <!-- Overlay Button -->
+                <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.5)); padding: 20px; text-align: right;">
+                    <a href="{% url 'clinic:department_detail' department.pk %}"
+                       style="background: white; color: #0D47A1; padding: 8px 20px; border-radius: 20px; font-weight: 600; font-size: 14px; text-decoration: none;">
+                        View Department →
+                    </a>
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Right Arrow -->
+        <button onclick="moveCarousel(1)" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); z-index: 10; width: 48px; height: 48px; border-radius: 50%; background: #0D47A1; color: white; border: none; font-size: 22px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">&#8250;</button>
+
+    </div>
+
+    <!-- Dots -->
+    <div id="carouselDots" style="display: flex; justify-content: center; gap: 8px; margin-top: 24px;">
         {% for department in departments %}
-        <div class="card">
-
-            <img src="/static/images/{{ department.image }}" 
-                 alt="{{ department.name }}" 
-                 class="card-image">
-
-            <div class="card-body">
-                <h3>{{ department.name }}</h3>
-                <p>{{ department.description|truncatewords:20 }}</p>
-            </div>
-
-            <div class="card-footer">
-                <a href="{% url 'clinic:department_detail' department.pk %}" 
-                   class="btn btn-blue" style="width:100%;">
-                    View Department
-                </a>
-            </div>
-
-        </div>
+        <div class="carousel-dot" onclick="goToSlide({{ forloop.counter0 }})"
+             style="width: 10px; height: 10px; border-radius: 50%; background: {% if forloop.first %}#0D47A1{% else %}#ccc{% endif %}; cursor: pointer; transition: background 0.3s;"></div>
         {% endfor %}
+    </div>
+
+</section>
+
+<!-- Quick Stats -->
+<section style="background: white; padding: 50px 40px;">
+<div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; text-align: center;">        <div style="padding: 30px; border-radius: 16px; background: #f0f4f8; border-top: 4px solid #0D47A1;">
+            <div style="font-size: 42px; font-weight: 700; color: #0D47A1;">4</div>
+            <div style="color: #666; margin-top: 6px;">Departments</div>
+        </div>
+        <div style="padding: 30px; border-radius: 16px; background: #f0f4f8; border-top: 4px solid #0D47A1;">
+            <div style="font-size: 42px; font-weight: 700; color: #0D47A1;">12</div>
+            <div style="color: #666; margin-top: 6px;">Specialist Doctors</div>
+        </div>
+        <div style="padding: 30px; border-radius: 16px; background: #f0f4f8; border-top: 4px solid #0D47A1;">
+            <div style="font-size: 42px; font-weight: 700; color: #0D47A1;">500+</div>
+            <div style="color: #666; margin-top: 6px;">Patients Served</div>
+        </div>
+        <div style="padding: 30px; border-radius: 16px; background: #f0f4f8; border-top: 4px solid #0D47A1;">
+            <div style="font-size: 42px; font-weight: 700; color: #0D47A1;">24/7</div>
+            <div style="color: #666; margin-top: 6px;">Online Booking</div>
+        </div>
     </div>
 </section>
 
-<!-- Doctors Section -->
-<section class="section">
-    <h2>Our Doctors</h2>
+<script>
+    let current = 0;
 
-    <div class="cards-grid">
-        {% for doctor in doctors %}
-        <div class="card">
+    function getSlides() { return document.querySelectorAll('.carousel-slide'); }
+    function getDots() { return document.querySelectorAll('.carousel-dot'); }
 
-            <img src="/static/images/{{ doctor.image }}" 
-                 alt="{{ doctor.name }}" 
-                 class="card-image">
+    function updateCarousel() {
+        const slides = getSlides();
+        const slideWidth = slides[0].offsetWidth + 24;
+        document.getElementById('carouselTrack').style.transform = `translateX(-${current * slideWidth}px)`;
+        getDots().forEach((d, i) => d.style.background = i === current ? '#0D47A1' : '#ccc');
+    }
 
-            <div class="card-body">
-                <h3>{{ doctor.name }}</h3>
-                <p>{{ doctor.description|truncatewords:15 }}</p>
-            </div>
+    function moveCarousel(dir) {
+        const max = getSlides().length - 2;
+        current = Math.max(0, Math.min(current + dir, max));
+        updateCarousel();
+    }
 
-            <div class="card-footer" style="display: flex; gap: 10px;">
-                
-                <a href="{% url 'clinic:doctor_detail' doctor.pk %}" 
-                   class="btn"
-                   style="flex:1; background:#EAF2FF; color:#0D47A1; border:1px solid #BFD7FF;">
-                    Read More
-                </a>
+    function goToSlide(index) {
+        const max = getSlides().length - 2;
+        current = Math.max(0, Math.min(index, max));
+        updateCarousel();
+    }
 
-                <a href="{% url 'booking_step3' %}?doctor_id={{ doctor.pk }}" 
-                   class="btn btn-blue"
-                   style="flex:1;">
-                    Book Appointment
-                </a>
-
-            </div>
-
-        </div>
-        {% endfor %}
-    </div>
-</section>
+    window.addEventListener('load', () => {
+        updateCarousel();
+        setInterval(() => moveCarousel(1), 3000);
+    });
+</script>
 
 {% endblock %}

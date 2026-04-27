@@ -19,7 +19,7 @@
         <div class="profile-sidebar" style="flex: 1; min-width: 300px; background: #f8fbff; padding: 40px; text-align: center; border-right: 1px solid #edf2f7;">
             <div class="image-wrapper" style="width: 200px; height: 200px; margin: 0 auto 24px; border-radius: 50%; overflow: hidden; border: 5px solid white; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
                 {% if doctor.image %}
-                    <img src="{{ doctor.image.url }}" alt="{{ doctor.name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img src="{% static 'images/' %}{{ doctor.image }}" alt="{{ doctor.name }}" style="width: 100%; height: 100%; object-fit: contain;">
                 {% else %}
                     <div style="width: 100%; height: 100%; background: #0b50c4; color: white; display: flex; align-items: center; justify-content: center; font-size: 48px; font-weight: bold;">
                         {{ doctor.name|slice:":2"|upper }}
@@ -28,7 +28,7 @@
             </div>
             
             <h1 style="font-size: 28px; color: #071a55; margin-bottom: 8px;">{{ doctor.name }}</h1>
-            <p style="font-size: 18px; color: #2f6fd6; font-weight: 500; margin-bottom: 20px;">{{ doctor.specialty }}</p>
+            <p style="font-size: 18px; color: #2f6fd6; font-weight: 500; margin-bottom: 20px;">{{ doctor.department.name }}</p>
             
             <div style="margin-bottom: 30px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
                 <div style="background: white; padding: 10px 20px; border-radius: 30px; border: 1px solid #e2e8f0;">
@@ -56,8 +56,8 @@
             </h2>
             
             <div style="line-height: 1.8; color: #4a5568; font-size: 16px;">
-                {% if doctor.bio %}
-                    {{ doctor.bio|linebreaks }}
+                {% if doctor.description %}
+                     {{ doctor.description|linebreaks }}
                 {% else %}
                     <p>Dr. {{ doctor.name }} is a dedicated specialist at MediClinic, committed to providing exceptional care and personalized treatment plans for every patient in the {{ doctor.department.name }} department.</p>
                     <p>With years of clinical experience and a patient-centered approach, Dr. {{ doctor.name }} ensures that all medical concerns are addressed with the highest level of professionalism and empathy.</p>
@@ -67,7 +67,7 @@
             <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid #edf2f7;">
                 <h3 style="font-size: 18px; color: #071a55; margin-bottom: 16px;">Areas of Expertise</h3>
                 <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-                    <span style="background: #edf2f7; padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #4a5568;">{{ doctor.specialty }}</span>
+                    <span style="background: #edf2f7; padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #4a5568;">{{ doctor.department.name }}</span>
                     <span style="background: #edf2f7; padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #4a5568;">Patient Consultations</span>
                     <span style="background: #edf2f7; padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #4a5568;">Diagnostic Care</span>
                 </div>
